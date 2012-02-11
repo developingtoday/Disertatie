@@ -1,12 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:stretchColumns="1">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
-   <TextView
-           android:id="@+id/titleSensors"
-           android:layout_width="fill_parent"
-           android:layout_height="wrap_content"
-           android:text="Sensors"
-       ></TextView>
-</LinearLayout>
+    <TableRow>
+        <TextView
+                android:layout_column="1"
+                android:text="Latitude"
+                android:padding="3dip" />
+        <TextView
+                android:id="@+id/txtLatitude"
+                android:text="0"
+                android:gravity="right"
+                android:padding="3dip" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+                android:layout_column="1"
+                android:text="Longitude"
+                android:padding="3dip" />
+        <TextView
+                android:id="@+id/txtLongitude"
+                android:text="0"
+                android:gravity="right"
+                android:padding="3dip" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+                android:layout_column="1"
+                android:text="Compass"
+                android:padding="3dip" />
+        <TextView
+                android:id="@+id/txtOrientation"
+                android:text="0"
+                android:gravity="right"
+                android:padding="3dip" />
+    </TableRow>
+
+
+
+    <TableRow>
+        <TextView
+                android:text=""
+                android:padding="3dip" />
+        <TextView
+                android:text="Speed"
+                android:padding="3dip" />
+        <TextView
+                android:id="@+id/txtSpeed"
+                android:text="0"
+                android:gravity="right"
+                android:padding="3dip" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+                android:text=""
+                android:padding="3dip" />
+        <TextView
+                android:text="Distance"
+                android:padding="3dip" />
+        <TextView
+                android:id="@+id/txtDistance"
+                android:text="0"
+                android:gravity="right"
+                android:padding="3dip" />
+    </TableRow>
+
+    <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+    <Button android:id="@+id/btnStop" android:text="Stop"></Button>
+</TableLayout>
