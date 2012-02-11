@@ -18,4 +18,5 @@
         <activity android:name=".Settings"/>
         <activity android:name=".GMapActivity"/>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 </manifest> 
