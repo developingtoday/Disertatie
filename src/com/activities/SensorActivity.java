@@ -1,6 +1,7 @@
 package com.activities;
 
 import android.app.Activity;
+import android.hardware.*;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -17,7 +18,10 @@ import android.widget.TextView;
 public class SensorActivity extends Activity {
     private TextView txtLatitude,txtLongitutde,txtOrientation,txtSpeed,txtDistance,txtAltitude;
     private LocationManager lManager;
+    private SensorManager sManager;
     private LocationListener locListener;
+    private Sensor _orientationSensor;
+    private SensorEventListener sensorEventListener;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sensoractivity);
@@ -30,8 +34,26 @@ public class SensorActivity extends Activity {
         lManager=(LocationManager)getSystemService(LOCATION_SERVICE);
         locListener=new GpsLocationListener();
         lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locListener);
+        sManager=(SensorManager)getSystemService(SENSOR_SERVICE);
+        _orientationSensor=sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+        sensorEventListener=new CompassListener();
+        sManager.registerListener(sensorEventListener,_orientationSensor,sManager.SENSOR_DELAY_NORMAL);
     }
 
+   class CompassListener implements SensorEventListener{
+         float[] valori;
+       @Override
+       public void onSensorChanged(SensorEvent sensorEvent) {
+           //To change body of implemented methods use File | Settings | File Templates.
+            valori=sensorEvent.values;
+           txtOrientation.setText(Float.toString(valori[0]));
+       }
+
+       @Override
+       public void onAccuracyChanged(Sensor sensor, int i) {
+           //To change body of implemented methods use File | Settings | File Templates.
+       }
+   }
 
     class GpsLocationListener implements LocationListener{
 
