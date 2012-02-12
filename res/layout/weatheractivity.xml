@@ -1,10 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
-  <TextView android:id="@+id/titleWeather"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Weather"     ></TextView>
-</LinearLayout>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:stretchColumns="1">
+
+    <TableRow>
+        <TextView
+                android:layout_column="1"
+                android:text="City"
+                android:padding="3dip" />
+        <TextView
+                android:id="@+id/txtCity"
+                android:text="0"
+                android:gravity="right"
+                android:padding="3dip" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+                android:layout_column="1"
+                android:text="Temp"
+                android:padding="3dip" />
+        <TextView
+                android:id="@+id/txtTemp"
+                android:text="0"
+                android:gravity="right"
+                android:padding="3dip" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+                android:layout_column="1"
+                android:text="Forecast"
+                android:padding="3dip" />
+        <TextView
+                android:id="@+id/txtForecast"
+                android:text="0"
+                android:gravity="right"
+                android:padding="3dip" />
+    </TableRow>
+
+
+    <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+    <Button android:id="@+id/btnGetWeather" android:text="Actualizeaza"></Button>
+</TableLayout>
