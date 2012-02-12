@@ -1,5 +1,7 @@
 package com.activities;
 
+import Obj.GeoInfo;
+import Servicii.ReverseGeocodeQueryWeb;
 import android.app.Activity;
 import android.hardware.*;
 import android.location.Location;
@@ -7,6 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by IntelliJ IDEA.
@@ -71,6 +74,20 @@ public class SensorActivity extends Activity {
             txtAltitude.setText(altitude.toString());
             txtSpeed.setText(speed.toString());
 
+            GeoInfo p=new GeoInfo();
+            p.setLatitude(latitude);
+            p.setLongitude(longitude);
+            ReverseGeocodeQueryWeb   r=new ReverseGeocodeQueryWeb();
+            r.setPoint(p);
+            r.PrepareUrl();
+
+            try {
+                r.Populeaza();
+                Toast.makeText(getApplicationContext(),r.getPoint().toString(),1000).show();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),e.toString(),1000).show();
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
         }
 
         @Override
