@@ -25,6 +25,7 @@ public class SensorActivity extends Activity {
     private LocationListener locListener;
     private Sensor _orientationSensor;
     private SensorEventListener sensorEventListener;
+    private TextView txtGeocode;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sensoractivity);
@@ -34,6 +35,7 @@ public class SensorActivity extends Activity {
         txtSpeed=(TextView)findViewById(R.id.txtSpeed);
         txtDistance=(TextView)findViewById(R.id.txtDistance);
         txtAltitude=(TextView)findViewById(R.id.txtAltitude);
+        txtGeocode=(TextView)findViewById(R.id.txtGeocode);
         lManager=(LocationManager)getSystemService(LOCATION_SERVICE);
         locListener=new GpsLocationListener();
         lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locListener);
@@ -58,10 +60,12 @@ public class SensorActivity extends Activity {
        }
    }
 
+    //TODO Listeneri sa fie separati in alte clase
     class GpsLocationListener implements LocationListener{
 
         Double latitude, longitude,altitude;
         Float speed;
+        ReverseGeocodeQueryWeb   r=new ReverseGeocodeQueryWeb(); //TODO asta sa fie singleton, de fapt cam toate serviciile sa fie singleton
         @Override
         public void onLocationChanged(Location location) {
             //To change body of implemented methods use File | Settings | File Templates.
@@ -77,13 +81,13 @@ public class SensorActivity extends Activity {
             GeoInfo p=new GeoInfo();
             p.setLatitude(latitude);
             p.setLongitude(longitude);
-            ReverseGeocodeQueryWeb   r=new ReverseGeocodeQueryWeb();
             r.setPoint(p);
             r.PrepareUrl();
-
+           
             try {
                 r.Populeaza();
                 Toast.makeText(getApplicationContext(),r.getPoint().toString(),1000).show();
+                txtGeocode.setText(r.getPoint().getAdress());
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(),e.toString(),1000).show();
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
