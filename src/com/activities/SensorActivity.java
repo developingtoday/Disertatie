@@ -1,6 +1,7 @@
 package com.activities;
 
 import Obj.GeoInfo;
+import Servicii.ElevationQueryWeb;
 import Servicii.ReverseGeocodeQueryWeb;
 import android.app.Activity;
 import android.hardware.*;
@@ -19,7 +20,7 @@ import android.widget.Toast;
  * To change this template use File | Settings | File Templates.
  */
 public class SensorActivity extends Activity {
-    private TextView txtLatitude,txtLongitutde,txtOrientation,txtSpeed,txtDistance,txtAltitude;
+    private TextView txtLatitude,txtLongitutde,txtOrientation,txtSpeed,txtDistance,txtAltitude,txtElevation;
     private LocationManager lManager;
     private SensorManager sManager;
     private LocationListener locListener;
@@ -36,6 +37,7 @@ public class SensorActivity extends Activity {
         txtDistance=(TextView)findViewById(R.id.txtDistance);
         txtAltitude=(TextView)findViewById(R.id.txtAltitude);
         txtGeocode=(TextView)findViewById(R.id.txtGeocode);
+        txtElevation=(TextView)findViewById(R.id.txtElevation) ;
         lManager=(LocationManager)getSystemService(LOCATION_SERVICE);
         locListener=new GpsLocationListener();
         lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locListener);
@@ -66,6 +68,7 @@ public class SensorActivity extends Activity {
         Double latitude, longitude,altitude;
         Float speed;
         ReverseGeocodeQueryWeb   r=new ReverseGeocodeQueryWeb(); //TODO asta sa fie singleton, de fapt cam toate serviciile sa fie singleton
+        ElevationQueryWeb e=new ElevationQueryWeb();
         @Override
         public void onLocationChanged(Location location) {
             //To change body of implemented methods use File | Settings | File Templates.
@@ -83,11 +86,15 @@ public class SensorActivity extends Activity {
             p.setLongitude(longitude);
             r.setPoint(p);
             r.PrepareUrl();
-           
+           e.setPoint(p);
+
+
             try {
                 r.Populeaza();
+                e.Popupleaza();
                 Toast.makeText(getApplicationContext(),r.getPoint().toString(),1000).show();
                 txtGeocode.setText(r.getPoint().getAdress());
+                txtElevation.setText(Double.toString(r.getPoint().getAltitude()));
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(),e.toString(),1000).show();
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
