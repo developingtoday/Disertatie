@@ -1,6 +1,8 @@
 package main;
 
 import Obj.GeoInfo;
+import Obj.GpsPoint;
+import Servicii.ElevationQueryWeb;
 import Servicii.ReverseGeocodeQueryWeb;
 
 /**
@@ -13,11 +15,14 @@ import Servicii.ReverseGeocodeQueryWeb;
 public class MainTest {
     public static void main(String[] args) throws Exception
        {
-           GeoInfo p=new GeoInfo();
-           p.setLatitude(44.200172);
-           p.setLongitude(28.625323);
-           ReverseGeocodeQueryWeb r=new ReverseGeocodeQueryWeb(p);
-           r.Populeaza();
+           GpsPoint p=new GpsPoint();
+           p.setLatitude(44.200172);    //45.425805,25.970564
+           p.setLongitude(28.625323);    //44.563616,27.364256
+                                         //44.200172,28.625323
+          // ReverseGeocodeQueryWeb r=new ReverseGeocodeQueryWeb(p);
+           ElevationQueryWeb r=new ElevationQueryWeb();
+            r.setPoint(p);
+          r.Popupleaza();
            System.out.println(r.getPoint().toString());
        }
     
