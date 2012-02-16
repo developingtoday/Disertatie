@@ -9,8 +9,12 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,8 +31,11 @@ public class SensorActivity extends Activity {
     private Sensor _orientationSensor;
     private SensorEventListener sensorEventListener;
     private TextView txtGeocode;
+    private ArrayList<Location> locationList;
+    private Button btnStop,btnGeocode,btnElevate,btnExport;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        locationList=new ArrayList<Location>();
         setContentView(R.layout.sensoractivity);
         txtLatitude=(TextView)findViewById(R.id.txtLatitude);
         txtLongitutde=(TextView)findViewById(R.id.txtLongitude);
@@ -38,15 +45,62 @@ public class SensorActivity extends Activity {
         txtAltitude=(TextView)findViewById(R.id.txtAltitude);
         txtGeocode=(TextView)findViewById(R.id.txtGeocode);
         txtElevation=(TextView)findViewById(R.id.txtElevation) ;
+        btnElevate=(Button)findViewById(R.id.btnElevate);
+        btnGeocode=(Button)findViewById(R.id.btnGeocode);
+        btnStop=(Button)findViewById(R.id.btnStop);
+        btnElevate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ElevateListener();
+            }
+        });
+        btnGeocode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               GeocodeListener();
+            }
+        });
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StopListener();
+            }
+        });
+        setupListeners();
+       }
+
+    private void ElevateListener()
+    {
+
+    }
+    private void GeocodeListener()
+    {
+
+    }
+    private void StopListener()
+    {
+       lManager.removeUpdates(locListener);
+    }
+    private void setupListeners()
+    {
         lManager=(LocationManager)getSystemService(LOCATION_SERVICE);
         locListener=new GpsLocationListener();
         lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locListener);
         sManager=(SensorManager)getSystemService(SENSOR_SERVICE);
         _orientationSensor=sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         sensorEventListener=new CompassListener();
-        sManager.registerListener(sensorEventListener,_orientationSensor,sManager.SENSOR_DELAY_NORMAL);
+        sManager.registerListener(sensorEventListener, _orientationSensor, sManager.SENSOR_DELAY_NORMAL);
+
     }
 
+    Double actualDistance;
+    private void CalculateDistance()
+    {
+        actualDistance=Double.parseDouble(txtDistance.getText().toString());
+        if(locationList.size()<=1) return;
+        actualDistance=(double)locationList.get(locationList.size()-1).distanceTo(locationList.get(locationList.size()-2));
+        txtDistance.setText(actualDistance.toString());
+    }
    class CompassListener implements SensorEventListener{
          float[] valori;
        @Override
@@ -62,43 +116,16 @@ public class SensorActivity extends Activity {
        }
    }
 
-    //TODO Listeneri sa fie separati in alte clase
+    
     class GpsLocationListener implements LocationListener{
 
-        Double latitude, longitude,altitude;
-        Float speed;
-        ReverseGeocodeQueryWeb   r=new ReverseGeocodeQueryWeb(); //TODO asta sa fie singleton, de fapt cam toate serviciile sa fie singleton
-        ElevationQueryWeb e=new ElevationQueryWeb();
-        @Override
+
+                @Override
         public void onLocationChanged(Location location) {
             //To change body of implemented methods use File | Settings | File Templates.
-            latitude=location.getLatitude();
-            longitude=location.getLongitude();
-            speed=location.getSpeed();
-            altitude=location.getAltitude();
-            txtLatitude.setText(latitude.toString());
-            txtLongitutde.setText(longitude.toString());
-            txtAltitude.setText(altitude.toString());
-            txtSpeed.setText(speed.toString());
-
-            GeoInfo p=new GeoInfo();
-            p.setLatitude(latitude);
-            p.setLongitude(longitude);
-            r.setPoint(p);
-            r.PrepareUrl();
-           e.setPoint(p);
-
-
-            try {
-                r.Populeaza();
-                e.Popupleaza();
-                Toast.makeText(getApplicationContext(),r.getPoint().toString(),1000).show();
-                txtGeocode.setText(r.getPoint().getAdress());
-                txtElevation.setText(Double.toString(r.getPoint().getAltitude()));
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(),e.toString(),1000).show();
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
+            PopulateViewControls(location);
+            locationList.add(location);
+            CalculateDistance();
         }
 
         @Override
@@ -114,6 +141,15 @@ public class SensorActivity extends Activity {
         @Override
         public void onProviderDisabled(String s) {
             //To change body of implemented methods use File | Settings | File Templates.
+        }
+        
+        private void PopulateViewControls(Location l)
+        {
+            txtLatitude.setText(Double.toString(l.getLatitude()));
+            txtLongitutde.setText(Double.toString(l.getLongitude()));
+            txtAltitude.setText(Double.toString(l.getAltitude()));
+            txtSpeed.setText(Double.toString(l.getSpeed()));
+
         }
     }
 }
