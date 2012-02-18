@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.utils.ServicesFactory;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Revan
@@ -38,7 +40,7 @@ public class WeatherActivity extends Activity {
         //TODO execute async
         //TODO verificat cazul cand nu exista conexiune la internet
         try{
-        WeatherQueryWeb q=new WeatherQueryWeb();
+        WeatherQueryWeb q= ServicesFactory.getWeatherService();
             WeatherInfo         w=new WeatherInfo();
         String url = "http://www.google.com/ig/api?weather=Constanta";
         q.setUrl(url);

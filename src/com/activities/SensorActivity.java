@@ -1,6 +1,7 @@
 package com.activities;
 
 import Obj.GeoInfo;
+import Obj.GpsPoint;
 import Servicii.ElevationQueryWeb;
 import Servicii.ReverseGeocodeQueryWeb;
 import android.app.Activity;
@@ -8,11 +9,16 @@ import android.hardware.*;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.utils.ServicesFactory;
 
 import java.util.ArrayList;
 
@@ -33,6 +39,10 @@ public class SensorActivity extends Activity {
     private TextView txtGeocode;
     private ArrayList<Location> locationList;
     private Button btnStop,btnGeocode,btnElevate,btnExport;
+    private ReverseGeocodeQueryWeb queryWeb;
+    private ElevationQueryWeb _elevQ;
+
+    private Handler handler;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         locationList=new ArrayList<Location>();
@@ -48,16 +58,32 @@ public class SensorActivity extends Activity {
         btnElevate=(Button)findViewById(R.id.btnElevate);
         btnGeocode=(Button)findViewById(R.id.btnGeocode);
         btnStop=(Button)findViewById(R.id.btnStop);
+        queryWeb= ServicesFactory.getReverseGeocodeService();
+        _elevQ=ServicesFactory.getElevationService();
+        handler=new Handler();
         btnElevate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ElevateListener();
+                Runnable runnable=new Runnable() {
+                    @Override
+                    public void run() {
+                        ElevateListener();
+                    }
+                };
+                new Thread(runnable).start();
             }
         });
         btnGeocode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               GeocodeListener();
+                Runnable runnable=new Runnable() {
+                    @Override
+                    public void run() {
+                        //To change body of implemented methods use File | Settings | File Templates.
+                        GeocodeListener();
+                    }
+                };
+               new Thread(runnable).start();
             }
         });
         btnStop.setOnClickListener(new View.OnClickListener() {
@@ -68,18 +94,77 @@ public class SensorActivity extends Activity {
         });
         setupListeners();
        }
+    private boolean IsOnline()
+    {
+        ConnectivityManager cm=(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo().isConnected();
+    }
 
     private void ElevateListener()
     {
-
+        try
+        {
+            if(!IsOnline()) {
+                Toast.makeText(getApplicationContext(),"Check your internet connection",500).show();
+                return;
+            }
+            if(locationList.size()<1) return;
+            GpsPoint p=new GpsPoint();
+            Location l=locationList.get(locationList.size()-1);
+            p.setLatitude(l.getLatitude());
+            p.setLongitude(l.getLongitude());
+           _elevQ.setPoint(p);
+            _elevQ.Popupleaza();
+            txtElevation.post(new Runnable() {
+                @Override
+                public void run() {
+                    txtElevation.setText(Double.toString(_elevQ.getPoint().getAltitude()));
+                }
+            });
+        } catch (Exception ex)
+        {
+           // ex.printStackTrace();
+            Log.d("Eroare",ex.getMessage(),ex.getCause());
+        }
     }
     private void GeocodeListener()
     {
-
+        try{
+            if(!IsOnline()) {
+                Toast.makeText(getApplicationContext(),"Check your internet connection",500).show();
+                return;
+            }    
+        GeoInfo g=new GeoInfo();
+        if(locationList.size()<1) return;
+        Location l=locationList.get(locationList.size()-1);
+        g.setLatitude(l.getLatitude());
+        g.setLongitude(l.getLongitude());
+        queryWeb.setPoint(g);
+        queryWeb.PrepareUrl();
+        queryWeb.Populeaza();
+        //txtGeocode.setText(queryWeb.getPoint().getCity());
+         txtGeocode.post(new Runnable() {
+             @Override
+             public void run() {
+                 txtGeocode.setText(queryWeb.getPoint().getAdress());
+             }
+         });
+        }catch (Exception ex)
+        {
+            Log.e("Exceptie",ex.getMessage(),ex.getCause());
+            ex.printStackTrace();
+        }
     }
     private void StopListener()
     {
        lManager.removeUpdates(locListener);
+        txtAltitude.setText("0");
+        txtDistance.setText("0");
+        txtGeocode.setText("0");
+        txtLatitude.setText("0");
+        txtLongitutde.setText("0");
+        txtSpeed.setText("0");
+        txtElevation.setText("0");
     }
     private void setupListeners()
     {
@@ -152,4 +237,7 @@ public class SensorActivity extends Activity {
 
         }
     }
+
+
+
 }

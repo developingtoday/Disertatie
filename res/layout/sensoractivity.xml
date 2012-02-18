@@ -105,7 +105,7 @@
         <TextView android:id="@+id/txtElevation"
                   android:text="0"
                   android:layout_width="wrap_content"
-                  android:gravity="fill"
+                  android:gravity="right"
                   android:padding="3dip"
                                        />
 
@@ -114,11 +114,7 @@
             android:layout_height="2dip"
             android:background="#FF909090" />
     <TableRow>
-        <TextView android:text=""
-                  android:padding="3dip" />
         <Button android:id="@+id/btnStop" android:text="Stop"></Button>
-        <TextView android:text=""
-                  android:padding="3dip" />
         <Button android:id="@+id/btnGeocode" android:text="Geocode"></Button>
         <Button android:id="@+id/btnElevate" android:text="Elevate"></Button>
 

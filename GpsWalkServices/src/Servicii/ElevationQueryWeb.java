@@ -31,8 +31,9 @@ public class ElevationQueryWeb extends AbstractXmlQuery {
     public void SetUrlWithPoint()
     {
        if(point==null) return;
-       TempUrl+=point.getLatitude()+","+point.getLongitude()+"&sensor=true";
-       setUrl(TempUrl);
+        String auxTemp=TempUrl;
+        auxTemp+=point.getLatitude()+","+point.getLongitude()+"&sensor=true";
+       setUrl(auxTemp);
     }
     public void Popupleaza()  throws Exception
     {
