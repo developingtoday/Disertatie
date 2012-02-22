@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.utils.Converters;
 import com.utils.ServicesFactory;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class SensorActivity extends Activity {
     private SensorManager sManager;
     private LocationListener locListener;
     private Sensor _orientationSensor;
+    private Sensor _geomagneticSensor;
     private SensorEventListener sensorEventListener;
     private TextView txtGeocode;
     private ArrayList<Location> locationList;
@@ -60,7 +62,6 @@ public class SensorActivity extends Activity {
         btnStop=(Button)findViewById(R.id.btnStop);
         queryWeb= ServicesFactory.getReverseGeocodeService();
         _elevQ=ServicesFactory.getElevationService();
-        handler=new Handler();
         btnElevate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,10 +105,7 @@ public class SensorActivity extends Activity {
     {
         try
         {
-            if(!IsOnline()) {
-                Toast.makeText(getApplicationContext(),"Check your internet connection",500).show();
-                return;
-            }
+
             if(locationList.size()<1) return;
             GpsPoint p=new GpsPoint();
             Location l=locationList.get(locationList.size()-1);
@@ -123,17 +121,14 @@ public class SensorActivity extends Activity {
             });
         } catch (Exception ex)
         {
-           // ex.printStackTrace();
+            ex.printStackTrace();
             Log.d("Eroare",ex.getMessage(),ex.getCause());
         }
     }
     private void GeocodeListener()
     {
         try{
-            if(!IsOnline()) {
-                Toast.makeText(getApplicationContext(),"Check your internet connection",500).show();
-                return;
-            }    
+
         GeoInfo g=new GeoInfo();
         if(locationList.size()<1) return;
         Location l=locationList.get(locationList.size()-1);
@@ -170,12 +165,14 @@ public class SensorActivity extends Activity {
     {
         lManager=(LocationManager)getSystemService(LOCATION_SERVICE);
         locListener=new GpsLocationListener();
-        lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locListener);
+        lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,20,locListener);
         sManager=(SensorManager)getSystemService(SENSOR_SERVICE);
         _orientationSensor=sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+       // _geomagneticSensor=sManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         sensorEventListener=new CompassListener();
         sManager.registerListener(sensorEventListener, _orientationSensor, sManager.SENSOR_DELAY_NORMAL);
-
+       // sManager.registerListener(sensorEventListener,_geomagneticSensor,sManager.SENSOR_DELAY_NORMAL);
+        
     }
 
     Double actualDistance;
@@ -187,12 +184,11 @@ public class SensorActivity extends Activity {
         txtDistance.setText(actualDistance.toString());
     }
    class CompassListener implements SensorEventListener{
-         float[] valori;
-       @Override
+
+         float azimuth;
        public void onSensorChanged(SensorEvent sensorEvent) {
-           //To change body of implemented methods use File | Settings | File Templates.
-            valori=sensorEvent.values;
-           txtOrientation.setText(Float.toString(valori[0]));
+            azimuth=sensorEvent.values[0];
+            txtOrientation.setText(Converters.getOrientation(azimuth)+" "+Float.toString(azimuth));
        }
 
        @Override

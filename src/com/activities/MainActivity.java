@@ -17,13 +17,10 @@ public class MainActivity extends TabActivity
         TabHost host=getTabHost();
         TabHost.TabSpec spec;
         Intent intent;
-      /*       */
+
          intent=new Intent().setClass(this,RoutesActivity.class);
          spec=host.newTabSpec("Routes").setIndicator("Routes").setContent(intent);
         host.addTab(spec);
-       /* intent=new Intent().setClass(this,GMapActivity.class);
-        spec=host.newTabSpec("Muie").setIndicator("Muie").setContent(intent);
-        host.addTab(spec);                    */
         intent=new Intent().setClass(this, PlotActivity.class);
         spec=host.newTabSpec("Plot").setIndicator("Plot").setContent(intent);
         host.addTab(spec);

@@ -4,6 +4,7 @@ import Obj.WeatherInfo;
 import Servicii.WeatherQueryWeb;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class WeatherActivity extends Activity {
         WeatherQueryWeb q= ServicesFactory.getWeatherService();
             WeatherInfo         w=new WeatherInfo();
         String url = "http://www.google.com/ig/api?weather=Constanta";
+
         q.setUrl(url);
         q.PopuleazaWeather();
         w=q.getWeather();
@@ -50,7 +52,8 @@ public class WeatherActivity extends Activity {
         txtTemp.setText(w.getTemp());
         }catch(Exception ex)
         {
-
+           ex.printStackTrace();
+           Log.d("Exceptie", ex.getMessage(), ex.getCause());
         }
     }
 }
