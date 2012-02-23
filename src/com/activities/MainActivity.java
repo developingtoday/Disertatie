@@ -23,12 +23,12 @@ public class MainActivity extends TabActivity
         spec=host.newTabSpec("Map").setIndicator("Map").setContent(intent);
         host.addTab(spec);
 
-         intent=new Intent().setClass(this,RoutesActivity.class);
-         spec=host.newTabSpec("Routes").setIndicator("Routes").setContent(intent);
-        host.addTab(spec);
-        intent=new Intent().setClass(this, PlotActivity.class);
-        spec=host.newTabSpec("Plot").setIndicator("Plot").setContent(intent);
-        host.addTab(spec);
+//         intent=new Intent().setClass(this,RoutesActivity.class);
+//         spec=host.newTabSpec("Routes").setIndicator("Routes").setContent(intent);
+//        host.addTab(spec);
+//        intent=new Intent().setClass(this, PlotActivity.class);
+//        spec=host.newTabSpec("Plot").setIndicator("Plot").setContent(intent);
+//        host.addTab(spec);
         intent=new Intent().setClass(this, SensorActivity.class);
         spec=host.newTabSpec("Sensors").setIndicator("Sensors").setContent(intent);
         host.addTab(spec);
