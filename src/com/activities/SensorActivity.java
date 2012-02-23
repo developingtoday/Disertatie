@@ -180,7 +180,7 @@ public class SensorActivity extends Activity {
     {
         actualDistance=Double.parseDouble(txtDistance.getText().toString());
         if(locationList.size()<=1) return;
-        actualDistance=(double)locationList.get(locationList.size()-1).distanceTo(locationList.get(locationList.size()-2));
+        actualDistance+=(double)locationList.get(locationList.size()-1).distanceTo(locationList.get(locationList.size()-2));
         txtDistance.setText(actualDistance.toString());
     }
    class CompassListener implements SensorEventListener{
