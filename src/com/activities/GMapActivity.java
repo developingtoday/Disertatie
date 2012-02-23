@@ -29,6 +29,8 @@ public class GMapActivity extends MapActivity {
     private MapView _mapView;
     private LocationManager loc;
     private GeoPoint point;
+     List<Overlay> mapOverlays;
+     MyLocationOverlay myLoc;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,39 +38,8 @@ public class GMapActivity extends MapActivity {
         _mapView=(MapView)findViewById(R.id.map_view);
         _mapController=_mapView.getController();
         _mapView.setBuiltInZoomControls(true);
-        final List<Overlay> mapOverlays=_mapView.getOverlays();
-        Drawable drawable=getResources().getDrawable(R.drawable.pinclip);
-       final CustomItemizedOverlay item=new CustomItemizedOverlay(drawable,this);
-
-        loc=(LocationManager)getSystemService(LOCATION_SERVICE);
-        LocationListener list=new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-               point=new GeoPoint((int)location.getLatitude()*1000000,(int)location.getLongitude()*1000000);
-                // item.mapOverlays.clear();
-                item.addOverlay(new OverlayItem(point, "Hello","Ba"));
-
-                mapOverlays.add(item);
-                _mapController.animateTo(point);
-                _mapController.setZoom(5);
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-        } ;
-        loc.requestLocationUpdates(LocationManager.GPS_PROVIDER,5,8,list);
+        mapOverlays=_mapView.getOverlays();
+        setupMyLocation();
         _mapView.invalidate();
     }
 
@@ -78,45 +49,18 @@ public class GMapActivity extends MapActivity {
     }
 
 
-    class CustomItemizedOverlay extends ItemizedOverlay<OverlayItem> {
-
-        private ArrayList<OverlayItem> mapOverlays = new ArrayList<OverlayItem>();
-
-        private Context context;
-
-        public CustomItemizedOverlay(Drawable defaultMarker) {
-            super(boundCenterBottom(defaultMarker));
-        }
-
-        public CustomItemizedOverlay(Drawable defaultMarker, Context context) {
-            this(defaultMarker);
-            this.context = context;
-        }
-
-        @Override
-        protected OverlayItem createItem(int i) {
-            return mapOverlays.get(i);
-        }
-
-        @Override
-        public int size() {
-            return mapOverlays.size();
-        }
-
-        @Override
-        protected boolean onTap(int index) {
-            OverlayItem item = mapOverlays.get(index);
-            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-            dialog.setTitle(item.getTitle());
-            dialog.setMessage(item.getSnippet());
-            dialog.show();
-            return true;
-        }
-
-        public void addOverlay(OverlayItem overlay) {
-            mapOverlays.add(overlay);
-            this.populate();
-        }
-
+    private void setupMyLocation()
+    {
+        myLoc=new MyLocationOverlay(this,_mapView);
+        myLoc.enableCompass();
+        myLoc.enableMyLocation();
+        mapOverlays.add(myLoc);
+        myLoc.runOnFirstFix(new Runnable() {
+            @Override
+            public void run() {
+                _mapController.animateTo(myLoc.getMyLocation());
+                _mapController.setZoom(10);
+            }
+        }) ;
     }
 }
