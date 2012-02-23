@@ -46,7 +46,6 @@ public class WeatherActivity extends Activity {
     }
 
     private void ShowInfo() {
-        //TODO execute async
         //TODO verificat cazul cand nu exista conexiune la internet
         try{
         final WeatherQueryWeb q= ServicesFactory.getWeatherService();
