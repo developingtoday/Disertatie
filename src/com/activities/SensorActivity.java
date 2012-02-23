@@ -165,7 +165,7 @@ public class SensorActivity extends Activity {
     {
         lManager=(LocationManager)getSystemService(LOCATION_SERVICE);
         locListener=new GpsLocationListener();
-        lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,20,locListener);
+        lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5,8,locListener);
         sManager=(SensorManager)getSystemService(SENSOR_SERVICE);
         _orientationSensor=sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
        // _geomagneticSensor=sManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
