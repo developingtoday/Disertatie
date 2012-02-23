@@ -2,6 +2,7 @@ package com.activities;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.TabHost;
 
@@ -17,6 +18,10 @@ public class MainActivity extends TabActivity
         TabHost host=getTabHost();
         TabHost.TabSpec spec;
         Intent intent;
+        Context c=this.getApplicationContext();
+        intent=new Intent().setClass(c,GMapActivity.class);
+        spec=host.newTabSpec("Map").setIndicator("Map").setContent(intent);
+        host.addTab(spec);
 
          intent=new Intent().setClass(this,RoutesActivity.class);
          spec=host.newTabSpec("Routes").setIndicator("Routes").setContent(intent);
@@ -34,5 +39,6 @@ public class MainActivity extends TabActivity
         spec=host.newTabSpec("Settings").setIndicator("Settings").setContent(intent);
         host.addTab(spec);
     }
+
 
 }
