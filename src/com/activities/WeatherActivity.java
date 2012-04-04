@@ -3,10 +3,13 @@ package com.activities;
 import Obj.WeatherInfo;
 import Servicii.WeatherQueryWeb;
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,18 +22,22 @@ import com.utils.ServicesFactory;
  * Time: 9:01 AM
  * To change this template use File | Settings | File Templates.
  */
-public class WeatherActivity extends Activity {
+public class WeatherActivity extends Fragment {
     private TextView txtCity,txtTemp,txtForecast;
     private Button btnActualizeaza;
     private Handler handler;
-    public void onCreate(Bundle savedInstanceState) {
+
+
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.weatheractivity);
-        txtCity=(TextView)findViewById(R.id.txtCity);
-        txtForecast=(TextView)findViewById(R.id.txtForecast);
-        txtTemp=(TextView)findViewById(R.id.txtTemp);
+        View fragView = inflater.inflate(R.layout.weatheractivity, container, false);
+
+        txtCity=(TextView)fragView.findViewById(R.id.txtCity);
+        txtForecast=(TextView)fragView.findViewById(R.id.txtForecast);
+        txtTemp=(TextView)fragView.findViewById(R.id.txtTemp);
         handler=new Handler();
-        btnActualizeaza=(Button)findViewById(R.id.btnGetWeather);
+        btnActualizeaza=(Button)fragView.findViewById(R.id.btnGetWeather);
         btnActualizeaza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,6 +50,7 @@ public class WeatherActivity extends Activity {
                 new Thread(runnable).start();
             }
         });
+        return fragView;
     }
 
     private void ShowInfo() {

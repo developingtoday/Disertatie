@@ -5,6 +5,8 @@ import Obj.GpsPoint;
 import Servicii.ElevationQueryWeb;
 import Servicii.ReverseGeocodeQueryWeb;
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
 import android.hardware.*;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,7 +16,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,14 +34,16 @@ import java.util.ArrayList;
  * Time: 9:04 AM
  * To change this template use File | Settings | File Templates.
  */
-public class SensorActivity extends Activity {
-    private TextView txtLatitude,txtLongitutde,txtOrientation,txtSpeed,txtDistance,txtAltitude,txtElevation;
+public class SensorActivity extends Fragment {
+    private TextView txtLatitude,txtLongitutde,txtOrientation,txtSpeed,txtDistance,txtAltitude,txtElevation,txtPressure;
     private LocationManager lManager;
     private SensorManager sManager;
     private LocationListener locListener;
     private Sensor _orientationSensor;
     private Sensor _geomagneticSensor;
+    private Sensor _pressureSensor;
     private SensorEventListener sensorEventListener;
+    private SensorEventListener pressureListener;
     private TextView txtGeocode;
     private ArrayList<Location> locationList;
     private Button btnStop,btnGeocode,btnElevate,btnExport;
@@ -45,21 +51,23 @@ public class SensorActivity extends Activity {
     private ElevationQueryWeb _elevQ;
 
     private Handler handler;
-    public void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                         Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         locationList=new ArrayList<Location>();
-        setContentView(R.layout.sensoractivity);
-        txtLatitude=(TextView)findViewById(R.id.txtLatitude);
-        txtLongitutde=(TextView)findViewById(R.id.txtLongitude);
-        txtOrientation=(TextView)findViewById(R.id.txtOrientation);
-        txtSpeed=(TextView)findViewById(R.id.txtSpeed);
-        txtDistance=(TextView)findViewById(R.id.txtDistance);
-        txtAltitude=(TextView)findViewById(R.id.txtAltitude);
-        txtGeocode=(TextView)findViewById(R.id.txtGeocode);
-        txtElevation=(TextView)findViewById(R.id.txtElevation) ;
-        btnElevate=(Button)findViewById(R.id.btnElevate);
-        btnGeocode=(Button)findViewById(R.id.btnGeocode);
-        btnStop=(Button)findViewById(R.id.btnStop);
+        View fragView = inflater.inflate(R.layout.sensoractivity, container, false);
+        txtLatitude=(TextView)fragView.findViewById(R.id.txtLatitude);
+        txtLongitutde=(TextView)fragView.findViewById(R.id.txtLongitude);
+        txtOrientation=(TextView)fragView.findViewById(R.id.txtOrientation);
+        txtSpeed=(TextView)fragView.findViewById(R.id.txtSpeed);
+        txtDistance=(TextView)fragView.findViewById(R.id.txtDistance);
+        txtAltitude=(TextView)fragView.findViewById(R.id.txtAltitude);
+        txtGeocode=(TextView)fragView.findViewById(R.id.txtGeocode);
+        txtElevation=(TextView)fragView.findViewById(R.id.txtElevation) ;
+        txtPressure=(TextView)fragView.findViewById(R.id.txtPressure);
+        btnElevate=(Button)fragView.findViewById(R.id.btnElevate);
+        btnGeocode=(Button)fragView.findViewById(R.id.btnGeocode);
+        btnStop=(Button)fragView.findViewById(R.id.btnStop);
         queryWeb= ServicesFactory.getReverseGeocodeService();
         _elevQ=ServicesFactory.getElevationService();
         btnElevate.setOnClickListener(new View.OnClickListener() {
@@ -93,13 +101,10 @@ public class SensorActivity extends Activity {
                 StopListener();
             }
         });
-        setupListeners();
+        setupListeners(fragView);
+        return fragView;
        }
-    private boolean IsOnline()
-    {
-        ConnectivityManager cm=(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo().isConnected();
-    }
+
 
     private void ElevateListener()
     {
@@ -161,16 +166,23 @@ public class SensorActivity extends Activity {
         txtSpeed.setText("0");
         txtElevation.setText("0");
     }
-    private void setupListeners()
+    private void setupListeners(View view)
     {
-        lManager=(LocationManager)getSystemService(LOCATION_SERVICE);
+
+
+        lManager=(LocationManager)view.getContext().getSystemService(Context.LOCATION_SERVICE) ;
         locListener=new GpsLocationListener();
         lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5,8,locListener);
-        sManager=(SensorManager)getSystemService(SENSOR_SERVICE);
+        sManager=(SensorManager)view.getContext().getSystemService(Context.SENSOR_SERVICE);
         _orientationSensor=sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
        // _geomagneticSensor=sManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        _pressureSensor=sManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
+
         sensorEventListener=new CompassListener();
+        pressureListener=new PressureListener();
+        sManager.registerListener(pressureListener,_pressureSensor,sManager.SENSOR_DELAY_NORMAL);
         sManager.registerListener(sensorEventListener, _orientationSensor, sManager.SENSOR_DELAY_NORMAL);
+
        // sManager.registerListener(sensorEventListener,_geomagneticSensor,sManager.SENSOR_DELAY_NORMAL);
         
     }
@@ -196,6 +208,22 @@ public class SensorActivity extends Activity {
            //To change body of implemented methods use File | Settings | File Templates.
        }
    }
+
+    class PressureListener implements SensorEventListener{
+        float pressure;
+        @Override
+        public void onSensorChanged(SensorEvent sensorEvent) {
+            //To change body of implemented methods use File | Settings | File Templates.
+            pressure=sensorEvent.values[0];
+            txtPressure.setText(Float.toString(pressure)+" hPa");
+
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int i) {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+    }
 
     
     class GpsLocationListener implements LocationListener{

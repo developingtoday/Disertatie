@@ -110,6 +110,21 @@
                                        />
 
     </TableRow>
+    <TableRow>
+        <TextView android:text=""
+                  android:padding="3dip" />
+
+        <TextView android:text="Pressure"
+                  android:padding="3dip" />
+
+        <TextView android:id="@+id/txtPressure"
+                  android:text="0"
+                  android:layout_width="wrap_content"
+                  android:gravity="right"
+                  android:padding="3dip"
+                />
+
+    </TableRow>
     <View
             android:layout_height="2dip"
             android:background="#FF909090" />
