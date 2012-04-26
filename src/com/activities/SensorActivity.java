@@ -52,7 +52,7 @@ public class SensorActivity extends Fragment implements INotifier<Location> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                          Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        list=new LocationController(getActivity().getApplicationContext());
+        list=LocationController.getInstance(getActivity().getApplicationContext());
         list.setNotifier(this);
         locationList=new ArrayList<Location>();
         View fragView = inflater.inflate(R.layout.sensoractivity, container, false);

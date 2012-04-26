@@ -22,15 +22,22 @@ public class LocationController implements LocationListener {
 
     public static  final String TAG="LocationController";
 
+    public static LocationController staticController;
+
     private INotifier<Location> notifier;
     private LocationManager locationManager;
     private Stack<Location> listaLocatii=new Stack<Location>();
-    public LocationController(Context context)
+    private LocationController(Context context)
     {
-       this.notifier=notifier;
        locationManager=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,6000,10,this);
 
+    }
+
+    public static synchronized LocationController getInstance(Context context)
+    {
+        if(staticController==null) staticController=new LocationController(context);
+        return staticController;
     }
 
     public void setNotifier(INotifier<Location> notifier)

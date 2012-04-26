@@ -34,9 +34,10 @@ public class GMapActivity extends MapActivity implements INotifier<Location> {
         _mapController=_mapView.getController();
         _mapView.setBuiltInZoomControls(true);
         mapOverlays=_mapView.getOverlays();
-        gpsLoc=new LocationController(getApplicationContext());
+        gpsLoc=LocationController.getInstance(getApplicationContext());
         setupMyLocation();
         _mapView.invalidate();
+        notifyView(gpsLoc.getLastLocation());
 
     }
      GeoPoint gpAux;
