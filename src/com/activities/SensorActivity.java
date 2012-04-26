@@ -12,15 +12,14 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.Button;
 import android.widget.TextView;
 import com.abstracte.INotifier;
 import com.listeners.LocationController;
 import com.utils.Converters;
 import com.utils.ServicesFactory;
+
 
 import java.util.ArrayList;
 
@@ -49,9 +48,13 @@ public class SensorActivity extends Fragment implements INotifier<Location> {
     private ElevationQueryWeb _elevQ;
 
     private Handler handler;
+
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                          Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         list=LocationController.getInstance(getActivity().getApplicationContext());
         list.setNotifier(this);
         locationList=new ArrayList<Location>();
@@ -70,7 +73,8 @@ public class SensorActivity extends Fragment implements INotifier<Location> {
         btnStop=(Button)fragView.findViewById(R.id.btnStop);
         queryWeb= ServicesFactory.getReverseGeocodeService();
         _elevQ=ServicesFactory.getElevationService();
-        btnElevate.setOnClickListener(new View.OnClickListener() {
+
+       btnElevate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Runnable runnable=new Runnable() {

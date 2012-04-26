@@ -28,9 +28,9 @@ public class MainActivity extends Activity
         tabSensors=actionBar.newTab().setText("Sensors");
         tabWeather=actionBar.newTab().setText("Weather");
         Fragment fragSensor=new SensorActivity();
-        Fragment fragWeahter=new WeatherActivity();
+        Fragment fragWeather=new WeatherActivity();
         tabSensors.setTabListener(new TabListAct(fragSensor));
-        tabWeather.setTabListener(new TabListAct(fragWeahter));
+        tabWeather.setTabListener(new TabListAct(fragWeather));
         actionBar.addTab(tabSensors);
         actionBar.addTab(tabWeather);
 
@@ -39,20 +39,20 @@ public class MainActivity extends Activity
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuItem map = menu.add(0, 1, 0, "Map");
-        map.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        map.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent i = new Intent(getApplicationContext(), GMapActivity.class);
-                startActivity(i);
-                return true;
-            }
-        });
+    super.onCreateOptionsMenu(menu);
+    MenuItem map = menu.add(0, 1, 0, "Map");
+    map.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+    map.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            Intent i = new Intent(getApplicationContext(), GMapActivity.class);
+            startActivity(i);
+            return true;
+        }
+    });
 
-        return true;
-    }
+    return true;
+}
 
       class TabListAct implements ActionBar.TabListener
         {
