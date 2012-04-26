@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/GpsWalk.iml" filepath="$PROJECT_DIR$/GpsWalk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GpsWalkServices/GpsWalkServices.iml" filepath="$PROJECT_DIR$/GpsWalkServices/GpsWalkServices.iml" />
+    </modules>
+  </component>
+</project>
+
