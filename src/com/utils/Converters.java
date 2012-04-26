@@ -1,5 +1,8 @@
 package com.utils;
 
+import android.location.Location;
+import com.google.android.maps.GeoPoint;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Revan
@@ -17,5 +20,10 @@ public class Converters {
        if(azimuth>=270 && azimuth<360) return "W";
        if(azimuth==360 && azimuth==0) return "N";
         return Float.toString(azimuth);
+    }
+    public static GeoPoint fromLocation2GeoPoint(Location location)
+    {
+        if(location==null) return null;
+        return new GeoPoint((int)(location.getLatitude()*1E6),(int)(location.getLongitude()*1E6));
     }
 }

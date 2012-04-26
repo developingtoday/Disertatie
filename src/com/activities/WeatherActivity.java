@@ -4,6 +4,9 @@ import Obj.WeatherInfo;
 import Servicii.WeatherQueryWeb;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,6 +16,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.maps.GeoPoint;
+import com.listeners.LocationController;
+import com.utils.Converters;
 import com.utils.ServicesFactory;
 
 /**
@@ -59,7 +65,18 @@ public class WeatherActivity extends Fragment {
         final WeatherQueryWeb q= ServicesFactory.getWeatherService();
             WeatherInfo         w=new WeatherInfo();
         String url = "http://www.google.com/ig/api?weather=Constanta";
+            LocationManager lm= (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+            GeoPoint l= Converters.fromLocation2GeoPoint(lm.getLastKnownLocation(lm.GPS_PROVIDER));
 
+            if(l!=null)
+            {
+                url="http://www.google.com/ig/api?weather=,,,";
+                String lng=String.valueOf(l.getLongitudeE6());
+                String lat=String.valueOf(l.getLatitudeE6());
+                url+=lat;
+                url+=",";
+                url+=lng;
+            }
         q.setUrl(url);
         q.PopuleazaWeather();
         w=q.getWeather();

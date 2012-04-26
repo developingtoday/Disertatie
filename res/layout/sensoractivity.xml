@@ -135,5 +135,6 @@
 
     </TableRow>
     <Button android:id="@+id/btnExport" android:text="Export"></Button>
+    <Button android:id="@+id/btnStart" android:text="Start"></Button>
 
 </TableLayout>

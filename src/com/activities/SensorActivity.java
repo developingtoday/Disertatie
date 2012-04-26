@@ -4,15 +4,11 @@ import Obj.GeoInfo;
 import Obj.GpsPoint;
 import Servicii.ElevationQueryWeb;
 import Servicii.ReverseGeocodeQueryWeb;
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.hardware.*;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -21,7 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.abstracte.INotifier;
+import com.listeners.LocationController;
 import com.utils.Converters;
 import com.utils.ServicesFactory;
 
@@ -34,9 +31,10 @@ import java.util.ArrayList;
  * Time: 9:04 AM
  * To change this template use File | Settings | File Templates.
  */
-public class SensorActivity extends Fragment {
+public class SensorActivity extends Fragment implements INotifier<Location> {
     private TextView txtLatitude,txtLongitutde,txtOrientation,txtSpeed,txtDistance,txtAltitude,txtElevation,txtPressure;
-    private LocationManager lManager;
+
+    private LocationController list;
     private SensorManager sManager;
     private LocationListener locListener;
     private Sensor _orientationSensor;
@@ -54,6 +52,8 @@ public class SensorActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                          Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        list=new LocationController(getActivity().getApplicationContext());
+        list.setNotifier(this);
         locationList=new ArrayList<Location>();
         View fragView = inflater.inflate(R.layout.sensoractivity, container, false);
         txtLatitude=(TextView)fragView.findViewById(R.id.txtLatitude);
@@ -111,9 +111,10 @@ public class SensorActivity extends Fragment {
         try
         {
 
-            if(locationList.size()<1) return;
+
             GpsPoint p=new GpsPoint();
-            Location l=locationList.get(locationList.size()-1);
+            Location l=list.getLastLocation();
+            if(l==null) return;
             p.setLatitude(l.getLatitude());
             p.setLongitude(l.getLongitude());
            _elevQ.setPoint(p);
@@ -135,8 +136,8 @@ public class SensorActivity extends Fragment {
         try{
 
         GeoInfo g=new GeoInfo();
-        if(locationList.size()<1) return;
-        Location l=locationList.get(locationList.size()-1);
+        Location l=list.getLastLocation();
+        if(l==null) return;
         g.setLatitude(l.getLatitude());
         g.setLongitude(l.getLongitude());
         queryWeb.setPoint(g);
@@ -157,7 +158,7 @@ public class SensorActivity extends Fragment {
     }
     private void StopListener()
     {
-       lManager.removeUpdates(locListener);
+        list.closeListeners();
         txtAltitude.setText("0");
         txtDistance.setText("0");
         txtGeocode.setText("0");
@@ -168,21 +169,14 @@ public class SensorActivity extends Fragment {
     }
     private void setupListeners(View view)
     {
-
-
-        lManager=(LocationManager)view.getContext().getSystemService(Context.LOCATION_SERVICE) ;
-        locListener=new GpsLocationListener();
-        lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5,8,locListener);
         sManager=(SensorManager)view.getContext().getSystemService(Context.SENSOR_SERVICE);
         _orientationSensor=sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
        // _geomagneticSensor=sManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         _pressureSensor=sManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
-
         sensorEventListener=new CompassListener();
         pressureListener=new PressureListener();
         sManager.registerListener(pressureListener,_pressureSensor,sManager.SENSOR_DELAY_NORMAL);
         sManager.registerListener(sensorEventListener, _orientationSensor, sManager.SENSOR_DELAY_NORMAL);
-
        // sManager.registerListener(sensorEventListener,_geomagneticSensor,sManager.SENSOR_DELAY_NORMAL);
         
     }
@@ -195,7 +189,16 @@ public class SensorActivity extends Fragment {
         actualDistance+=(double)locationList.get(locationList.size()-1).distanceTo(locationList.get(locationList.size()-2));
         txtDistance.setText(actualDistance.toString());
     }
-   class CompassListener implements SensorEventListener{
+
+    @Override
+    public void notifyView(Location l) {
+        txtLatitude.setText(Double.toString(l.getLatitude()));
+        txtLongitutde.setText(Double.toString(l.getLongitude()));
+        txtAltitude.setText(Double.toString(l.getAltitude()));
+        txtSpeed.setText(Double.toString(l.getSpeed()));
+    }
+
+    class CompassListener implements SensorEventListener{
 
          float azimuth;
        public void onSensorChanged(SensorEvent sensorEvent) {
@@ -226,41 +229,10 @@ public class SensorActivity extends Fragment {
     }
 
     
-    class GpsLocationListener implements LocationListener{
 
 
-                @Override
-        public void onLocationChanged(Location location) {
-            //To change body of implemented methods use File | Settings | File Templates.
-            PopulateViewControls(location);
-            locationList.add(location);
-            CalculateDistance();
-        }
 
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
 
-        @Override
-        public void onProviderEnabled(String s) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-        
-        private void PopulateViewControls(Location l)
-        {
-            txtLatitude.setText(Double.toString(l.getLatitude()));
-            txtLongitutde.setText(Double.toString(l.getLongitude()));
-            txtAltitude.setText(Double.toString(l.getAltitude()));
-            txtSpeed.setText(Double.toString(l.getSpeed()));
-
-        }
-    }
 
 
 
