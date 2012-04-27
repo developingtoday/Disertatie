@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.abstracte.INotifier;
 import com.listeners.LocationController;
+import com.obj.SensorData;
 import com.utils.Converters;
 import com.utils.ServicesFactory;
 
@@ -30,17 +31,9 @@ import java.util.ArrayList;
  * Time: 9:04 AM
  * To change this template use File | Settings | File Templates.
  */
-public class SensorActivity extends Fragment implements INotifier<Location> {
+public class SensorActivity extends Fragment implements INotifier<SensorData> {
     private TextView txtLatitude,txtLongitutde,txtOrientation,txtSpeed,txtDistance,txtAltitude,txtElevation,txtPressure;
-
     private LocationController list;
-    private SensorManager sManager;
-    private LocationListener locListener;
-    private Sensor _orientationSensor;
-    private Sensor _geomagneticSensor;
-    private Sensor _pressureSensor;
-    private SensorEventListener sensorEventListener;
-    private SensorEventListener pressureListener;
     private TextView txtGeocode;
     private ArrayList<Location> locationList;
     private Button btnStop,btnGeocode,btnElevate,btnExport;
@@ -105,7 +98,6 @@ public class SensorActivity extends Fragment implements INotifier<Location> {
                 StopListener();
             }
         });
-        setupListeners(fragView);
         return fragView;
        }
 
@@ -171,19 +163,6 @@ public class SensorActivity extends Fragment implements INotifier<Location> {
         txtSpeed.setText("0");
         txtElevation.setText("0");
     }
-    private void setupListeners(View view)
-    {
-        sManager=(SensorManager)view.getContext().getSystemService(Context.SENSOR_SERVICE);
-        _orientationSensor=sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
-       // _geomagneticSensor=sManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        _pressureSensor=sManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
-        sensorEventListener=new CompassListener();
-        pressureListener=new PressureListener();
-        sManager.registerListener(pressureListener,_pressureSensor,sManager.SENSOR_DELAY_NORMAL);
-        sManager.registerListener(sensorEventListener, _orientationSensor, sManager.SENSOR_DELAY_NORMAL);
-       // sManager.registerListener(sensorEventListener,_geomagneticSensor,sManager.SENSOR_DELAY_NORMAL);
-        
-    }
 
     Double actualDistance;
     private void CalculateDistance()
@@ -195,42 +174,17 @@ public class SensorActivity extends Fragment implements INotifier<Location> {
     }
 
     @Override
-    public void notifyView(Location l) {
-        txtLatitude.setText(Double.toString(l.getLatitude()));
-        txtLongitutde.setText(Double.toString(l.getLongitude()));
-        txtAltitude.setText(Double.toString(l.getAltitude()));
-        txtSpeed.setText(Double.toString(l.getSpeed()));
+    public void notifyView(SensorData l) {
+        txtLatitude.setText(Double.toString(l.getLatitudine()));
+        txtLongitutde.setText(Double.toString(l.getLongitudine()));
+        txtAltitude.setText(Double.toString(l.getAltitudine()));
+        txtSpeed.setText(Double.toString(l.getViteza()));
+        txtPressure.setText(Double.toString(l.getPresiune()));
     }
 
-    class CompassListener implements SensorEventListener{
 
-         float azimuth;
-       public void onSensorChanged(SensorEvent sensorEvent) {
-            azimuth=sensorEvent.values[0];
-            txtOrientation.setText(Converters.getOrientation(azimuth)+" "+Float.toString(azimuth));
-       }
 
-       @Override
-       public void onAccuracyChanged(Sensor sensor, int i) {
-           //To change body of implemented methods use File | Settings | File Templates.
-       }
-   }
 
-    class PressureListener implements SensorEventListener{
-        float pressure;
-        @Override
-        public void onSensorChanged(SensorEvent sensorEvent) {
-            //To change body of implemented methods use File | Settings | File Templates.
-            pressure=sensorEvent.values[0];
-            txtPressure.setText(Float.toString(pressure)+" hPa");
-
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int i) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-    }
 
     
 

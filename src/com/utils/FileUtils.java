@@ -36,6 +36,7 @@ public  class FileUtils {
             {
                 file.createNewFile();
             }
+
             bw=new BufferedWriter(new FileWriter(file,true));
             bw.write(appe);
             bw.newLine();

@@ -1,11 +1,21 @@
 package com.listeners;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 import com.abstracte.INotifier;
+import com.abstracte.ISensorDataManager;
+import com.managers.SensorDataManager;
+import com.obj.SensorData;
 import com.utils.FileUtils;
 
 import java.io.File;
@@ -24,14 +34,38 @@ public class LocationController implements LocationListener {
 
     public static LocationController staticController;
 
-    private INotifier<Location> notifier;
+    private Sensor pressureSensor,acell,magnetic,orientation;
+    private SensorManager sManager;
+    private INotifier<SensorData> notifier;
     private LocationManager locationManager;
-    private Stack<Location> listaLocatii=new Stack<Location>();
+    private ISensorDataManager manager;
+    private PressureListener sensorEventListener;
+    private CompassListener compassListener;
+    private OrientationCompassListener oLic;
+
+
+
     private LocationController(Context context)
+
     {
-       locationManager=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        sManager=(SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
+        pressureSensor=sManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
+        acell=sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magnetic=sManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        orientation=sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+        sensorEventListener=new PressureListener();
+        compassListener=new CompassListener();
+         oLic=new OrientationCompassListener();
+        sManager.registerListener(sensorEventListener,pressureSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sManager.registerListener(compassListener,acell,SensorManager.SENSOR_DELAY_NORMAL);
+        sManager.registerListener(compassListener,magnetic,SensorManager.SENSOR_DELAY_NORMAL);
+        sManager.registerListener(oLic,orientation,SensorManager.SENSOR_DELAY_NORMAL);
+
+        locationManager=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,6000,10,this);
 
+
+        manager=new SensorDataManager();
     }
 
     public static synchronized LocationController getInstance(Context context)
@@ -40,17 +74,15 @@ public class LocationController implements LocationListener {
         return staticController;
     }
 
-    public void setNotifier(INotifier<Location> notifier)
+    public void setNotifier(INotifier<SensorData> notifier)
     {
         this.notifier=notifier;
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        //To change body of implemented methods use File | Settings | File Templates.
-         listaLocatii.push(location);
-         if(notifier!=null) notifier.notifyView(location);
-
+        manager.addData(new SensorData(location.getLongitude(),location.getLatitude(),sensorEventListener.getLastPressureValue(),location.getAltitude(),location.getSpeed(),oLic.getLastOrientation()));
+        if(notifier!=null) notifier.notifyView(manager.getLastSensorDataKnown());
     }
 
     @Override
@@ -71,22 +103,92 @@ public class LocationController implements LocationListener {
     public void closeListeners()
     {
         locationManager.removeUpdates(this);
-        for(Location loc:listaLocatii)
-        {
-            FileUtils.WriteTag("Latitude",Double.toString(loc.getLatitude()));
-            FileUtils.WriteTag("Longitude",Double.toString(loc.getLongitude()));
-            FileUtils.WriteTag("Speed",Float.toString(loc.getSpeed()));
-            FileUtils.WriteTag("Altitude",Double.toString(loc.getAltitude()));
-            FileUtils.WriteTag("Precision",Float.toString(loc.getAccuracy()));
-        }
-        FileUtils.appendToLog();
-        listaLocatii.clear();
+        manager.flushToDataSource();
+
     }
 
     public Location getLastLocation()
     {
         return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
     }
+
+    class PressureListener implements SensorEventListener{
+
+        private float presureValue;
+        @Override
+        public void onSensorChanged(SensorEvent sensorEvent) {
+                 try{
+
+                  presureValue=sensorEvent.values[0];
+                 }catch(Exception ex)
+                 {
+
+                     Log.d("Pressure Listener", ex.getMessage(), ex);
+                 }
+
+
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int i) {
+
+        }
+
+        public float getLastPressureValue()
+        {
+            return presureValue;
+        }
+    }
+
+    class CompassListener implements SensorEventListener{
+
+        float[] gravity,geomagnetic,orientation;
+        float[]  I=new float[9];
+        float[] R=new float[9];
+        float lastOrientation;
+        boolean succes;
+        @Override
+        public void onSensorChanged(SensorEvent sensorEvent) {
+            if(sensorEvent.sensor.getType()==Sensor.TYPE_ACCELEROMETER) gravity=sensorEvent.values;
+            if(sensorEvent.sensor.getType()==Sensor.TYPE_MAGNETIC_FIELD) geomagnetic=sensorEvent.values;
+            if(gravity==null || geomagnetic==null) return;
+            succes=SensorManager.getRotationMatrix(R,I,gravity,geomagnetic);
+            if(!succes) return;
+            orientation=new float[3];
+            SensorManager.getOrientation(R,orientation);
+            lastOrientation=orientation[0];
+            gravity=geomagnetic=null;
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int i) {
+
+
+        }
+        public float getLastOrientation()
+        {
+            return lastOrientation;
+        }
+    }
+
+    class OrientationCompassListener implements SensorEventListener{
+        private float lastOrientation;
+        @Override
+        public void onSensorChanged(SensorEvent sensorEvent) {
+               lastOrientation=sensorEvent.values[0];
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int i) {
+
+        }
+
+        public float getLastOrientation() {
+            return lastOrientation;
+        }
+    }
+
+
 
 
 }

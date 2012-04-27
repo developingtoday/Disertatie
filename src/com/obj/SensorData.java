@@ -1,5 +1,7 @@
 package com.obj;
 
+import android.location.Location;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Revan
@@ -19,6 +21,7 @@ public class SensorData {
         this.viteza = viteza;
         this.orientare = orientare;
     }
+
 
     public SensorData() {
 
