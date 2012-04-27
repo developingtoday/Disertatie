@@ -40,15 +40,20 @@ public class SensorDataManager implements ISensorDataManager {
 
     @Override
     public void flushToDataSource() {
+
+        FileUtils.BeginTag("Walk");
         for(SensorData loc:dataCol)
         {
+            FileUtils.BeginTag("SensorData");
             FileUtils.WriteTag("Latitude", Double.toString(loc.getLatitudine()));
             FileUtils.WriteTag("Longitude",Double.toString(loc.getLongitudine()));
             FileUtils.WriteTag("Speed",Double.toString(loc.getViteza()));
             FileUtils.WriteTag("Altitude",Double.toString(loc.getAltitudine()));
             FileUtils.WriteTag("Pressure",Double.toString(loc.getPresiune()));
             FileUtils.WriteTag("Orientation",Float.toString(loc.getOrientare()));
+            FileUtils.EndTag("SensorData");
         }
+        FileUtils.EndTag("Walk");
         FileUtils.appendToLog();
         dataCol.clear();
     }

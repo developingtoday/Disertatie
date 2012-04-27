@@ -32,6 +32,9 @@ public class LocationController implements LocationListener {
 
     public static  final String TAG="LocationController";
 
+
+
+    public  boolean isListening;
     public static LocationController staticController;
 
     private Sensor pressureSensor,acell,magnetic,orientation;
@@ -62,7 +65,7 @@ public class LocationController implements LocationListener {
         sManager.registerListener(oLic,orientation,SensorManager.SENSOR_DELAY_NORMAL);
 
         locationManager=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-       locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,6000,10,this);
+       locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,10,this);
 
 
         manager=new SensorDataManager();
@@ -79,8 +82,13 @@ public class LocationController implements LocationListener {
         this.notifier=notifier;
     }
 
+    public void setListening(boolean listening) {
+        isListening = listening;
+    }
+
     @Override
     public void onLocationChanged(Location location) {
+        if(!isListening) return;
         manager.addData(new SensorData(location.getLongitude(),location.getLatitude(),sensorEventListener.getLastPressureValue(),location.getAltitude(),location.getSpeed(),oLic.getLastOrientation()));
         if(notifier!=null) notifier.notifyView(manager.getLastSensorDataKnown());
     }
@@ -102,7 +110,7 @@ public class LocationController implements LocationListener {
 
     public void closeListeners()
     {
-        locationManager.removeUpdates(this);
+        isListening=false;
         manager.flushToDataSource();
 
     }

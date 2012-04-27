@@ -1,10 +1,12 @@
 package com.utils;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.GregorianCalendar;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,6 +20,11 @@ public  class FileUtils {
     static StringBuffer sbufferLog=new StringBuffer();
    static BufferedWriter bw;
 
+   public static void BeginTag(String tagXml)
+   {
+       sbufferLog.append("<"+tagXml+">");
+   }
+
     public static void WriteTag(String tagXml,String value)
     {
         sbufferLog.append("<"+tagXml+">");
@@ -26,14 +33,27 @@ public  class FileUtils {
         sbufferLog.append("\n");
 
     }
+
+    public static void EndTag(String tagXml)
+    {
+        sbufferLog.append("</"+tagXml+">");
+    }
     private static void appendToLog(String appe)
     {
 
         try
         {
-            File file=new File("/sdcard/log.txt");
+            String fileName="log_"+Long.toString(new GregorianCalendar().getTime().getTime());
+            File dir=new File("/sdcard/GpsWalk/");
+            if(!dir.exists())
+            {
+                dir.mkdir();
+            }
+            File file=new File("/sdcard/GpsWalk/"+fileName+".xml");
+
             if(!file.exists())
             {
+
                 file.createNewFile();
             }
 

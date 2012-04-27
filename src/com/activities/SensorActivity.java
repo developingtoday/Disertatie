@@ -36,7 +36,7 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
     private LocationController list;
     private TextView txtGeocode;
     private ArrayList<Location> locationList;
-    private Button btnStop,btnGeocode,btnElevate,btnExport;
+    private Button btnStop,btnGeocode,btnElevate,btnExport,btnStart;
     private ReverseGeocodeQueryWeb queryWeb;
     private ElevationQueryWeb _elevQ;
 
@@ -64,6 +64,15 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         btnElevate=(Button)fragView.findViewById(R.id.btnElevate);
         btnGeocode=(Button)fragView.findViewById(R.id.btnGeocode);
         btnStop=(Button)fragView.findViewById(R.id.btnStop);
+        btnStart=(Button)fragView.findViewById(R.id.btnStart);
+        btnStart.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        list.setListening(true);
+                    }
+                }
+        );
         queryWeb= ServicesFactory.getReverseGeocodeService();
         _elevQ=ServicesFactory.getElevationService();
 
@@ -165,7 +174,7 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
     }
 
     Double actualDistance;
-    private void CalculateDistance()
+    private void CalculateDistance()    //TODO mutat in SensorDataManager
     {
         actualDistance=Double.parseDouble(txtDistance.getText().toString());
         if(locationList.size()<=1) return;
@@ -180,6 +189,7 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         txtAltitude.setText(Double.toString(l.getAltitudine()));
         txtSpeed.setText(Double.toString(l.getViteza()));
         txtPressure.setText(Double.toString(l.getPresiune()));
+        txtOrientation.setText(Float.toString(l.getOrientare()));
     }
 
 
