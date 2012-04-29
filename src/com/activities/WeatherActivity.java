@@ -1,12 +1,10 @@
 package com.activities;
 
+import Obj.GeoInfo;
+import Obj.GpsPoint;
 import Obj.WeatherInfo;
 import Servicii.WeatherQueryWeb;
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,11 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.google.android.maps.GeoPoint;
 import com.listeners.LocationController;
-import com.utils.Converters;
-import com.utils.ServicesFactory;
+import Utils.ServicesFactory;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,7 +27,7 @@ public class WeatherActivity extends Fragment {
     private TextView txtCity,txtTemp,txtForecast;
     private Button btnActualizeaza;
     private Handler handler;
-
+    private LocationController lc;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +49,7 @@ public class WeatherActivity extends Fragment {
                     }
                 };
                 new Thread(runnable).start();
+        lc=LocationController.getInstance(getActivity().getApplicationContext());
             }
         });
         return fragView;
@@ -63,28 +59,41 @@ public class WeatherActivity extends Fragment {
         //TODO verificat cazul cand nu exista conexiune la internet
         try{
         final WeatherQueryWeb q= ServicesFactory.getWeatherService();
-            WeatherInfo         w=new WeatherInfo();
-        String url = "http://www.google.com/ig/api?weather=Constanta";
-            LocationManager lm= (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-            GeoPoint l= Converters.fromLocation2GeoPoint(lm.getLastKnownLocation(lm.GPS_PROVIDER));
 
-            if(l!=null)
-            {
-                url="http://www.google.com/ig/api?weather=,,,";
-                String lng=String.valueOf(l.getLongitudeE6());
-                String lat=String.valueOf(l.getLatitudeE6());
-                url+=lat;
-                url+=",";
-                url+=lng;
-            }
-        q.setUrl(url);
-        q.PopuleazaWeather();
-        w=q.getWeather();
+          final  WeatherInfo         w;
+
+
+
+//             GeoInfo g=lc.getGeocodingFromLocation(lc.getLastLocation());
+//
+//            Toast.makeText(getActivity().getApplicationContext(),g.getCountry()+" "+g.getCity(),100).show();
+
+//            ReverseGeocodeQueryWeb queryWeb=ServicesFactory.getReverseGeocodeService();
+//            g.setLatitude(lc.getLastLocation().getLatitude());
+//            g.setLongitude(lc.getLastLocation().getLongitude());
+//            queryWeb.setPoint(g);
+//            queryWeb.PrepareUrl();
+//            queryWeb.Populeaza();
+//            String city=queryWeb.getPoint().getCity();
+//            url="http://www.google.com/ig/api?weather="+city;
+//            if(l!=null)
+//            {
+//                url="http://www.google.com/ig/api?weather=,,,";
+//                String lng=String.valueOf(l.getLongitudeE6());
+//                String lat=String.valueOf(l.getLatitudeE6());
+//                url+=lat;
+//                url+=",";
+//                url+=lng;
+//            }
+        GpsPoint g=new GpsPoint();
+            g.setLatitude(lc.getLastLocation().getLatitude());
+            g.setLongitude(lc.getLastLocation().getLongitude());
+        w=q.getInfoFromPoint(g);
         handler.post(new Runnable() {
             @Override
             public void run() {
-                txtCity.setText(q.getWeather().getLocation());
-                txtTemp.setText(q.getWeather().getTemp());
+                txtCity.setText(w.getCity());
+                txtTemp.setText(w.getTemp());
             }
         });
         }catch(Exception ex)

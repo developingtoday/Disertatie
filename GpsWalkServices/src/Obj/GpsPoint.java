@@ -10,6 +10,7 @@ package Obj;
 public class GpsPoint {
     private double Latitude, Longitude,Altitude;
 
+
     public double  getLatitude()
     {
         return Latitude;
@@ -34,6 +35,7 @@ public class GpsPoint {
     {
         Altitude=value;
     }
+
     @Override
     public String toString()
     {

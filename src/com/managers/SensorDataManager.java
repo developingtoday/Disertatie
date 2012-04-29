@@ -48,6 +48,7 @@ public class SensorDataManager implements ISensorDataManager {
             FileUtils.WriteTag("Latitude", Double.toString(loc.getLatitudine()));
             FileUtils.WriteTag("Longitude",Double.toString(loc.getLongitudine()));
             FileUtils.WriteTag("Speed",Double.toString(loc.getViteza()));
+            FileUtils.WriteTag("DistanceTravelled",Float.toString(loc.getDistantaParcursa()));
             FileUtils.WriteTag("Altitude",Double.toString(loc.getAltitudine()));
             FileUtils.WriteTag("Pressure",Double.toString(loc.getPresiune()));
             FileUtils.WriteTag("Orientation",Float.toString(loc.getOrientare()));

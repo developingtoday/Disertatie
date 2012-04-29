@@ -1,24 +1,28 @@
 package com.listeners;
 
+import Obj.GeoInfo;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.location.*;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 import com.abstracte.INotifier;
 import com.abstracte.ISensorDataManager;
+import com.google.android.maps.GeoPoint;
 import com.managers.SensorDataManager;
 import com.obj.SensorData;
 import com.utils.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.Normalizer;
+import java.util.List;
+import java.util.Locale;
 import java.util.Stack;
 
 /**
@@ -45,7 +49,7 @@ public class LocationController implements LocationListener {
     private PressureListener sensorEventListener;
     private CompassListener compassListener;
     private OrientationCompassListener oLic;
-
+    private Geocoder geocoder;
 
 
     private LocationController(Context context)
@@ -63,6 +67,8 @@ public class LocationController implements LocationListener {
         sManager.registerListener(compassListener,acell,SensorManager.SENSOR_DELAY_NORMAL);
         sManager.registerListener(compassListener,magnetic,SensorManager.SENSOR_DELAY_NORMAL);
         sManager.registerListener(oLic,orientation,SensorManager.SENSOR_DELAY_NORMAL);
+        isListening=true;
+       if(Geocoder.isPresent()) geocoder=new Geocoder(context);
 
         locationManager=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,10,this);
@@ -86,11 +92,20 @@ public class LocationController implements LocationListener {
         isListening = listening;
     }
 
+
+    float[] results=new float[1];
+    float  distanta;
     @Override
     public void onLocationChanged(Location location) {
         if(!isListening) return;
-        manager.addData(new SensorData(location.getLongitude(),location.getLatitude(),sensorEventListener.getLastPressureValue(),location.getAltitude(),location.getSpeed(),oLic.getLastOrientation()));
+        if(!manager.getLastSensorDataKnown().isEmpty()){
+            Location.distanceBetween(manager.getLastSensorDataKnown().getLatitudine(),manager.getLastSensorDataKnown().getLongitudine(),location.getLatitude(), location.getLongitude(), results);
+            distanta=results[0];
+        }
+
+        manager.addData(new SensorData(location.getLongitude(),location.getLatitude(),sensorEventListener.getLastPressureValue(),location.getAltitude(),location.getSpeed(),oLic.getLastOrientation(),distanta));
         if(notifier!=null) notifier.notifyView(manager.getLastSensorDataKnown());
+
     }
 
     @Override
@@ -118,6 +133,17 @@ public class LocationController implements LocationListener {
     public Location getLastLocation()
     {
         return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    }
+
+    public GeoInfo getGeocodingFromLocation(Location data) throws IOException
+    {
+          if(geocoder==null ) throw new NullPointerException("No Geocoder inside device");
+          List<Address> list= geocoder.getFromLocation(data.getLatitude(), data.getLongitude(),1);
+          if(list==null || list.get(0)==null ) return new GeoInfo();
+           Address a=list.get(0);
+         GeoInfo g=new GeoInfo();
+        g.setCity(a.getLocality());
+        return g;
     }
 
     class PressureListener implements SensorEventListener{

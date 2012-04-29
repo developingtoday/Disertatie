@@ -20,47 +20,59 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import Obj.GpsPoint;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-public abstract class AbstractXmlQuery {
-           private String Url;
-           private String Key;
+public abstract class AbstractXmlQuery<T extends GpsPoint> {
 
-    public void setKey(String Key) {
-        this.Key = Key;
+          protected   String Url;
+           protected String auxBaseUrl;
+
+    public AbstractXmlQuery(String baseUrl)
+    {
+        Url=baseUrl;
+        auxBaseUrl=baseUrl;
     }
 
+   private Document getDocument() throws Exception
+   {
+       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+       factory.setNamespaceAware(true);
+       DocumentBuilder builder;
+       Document doc = null;
+       builder = factory.newDocumentBuilder();
+       doc = builder.parse(Url);
+       return doc;
+   }
 
-   protected NodeList QueryXml(String query, QName qret) throws ParserConfigurationException, SAXException,
-            IOException, XPathExpressionException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware(true);
-        DocumentBuilder builder;
-        Document doc = null;
-        XPathExpression expr = null;
-        builder = factory.newDocumentBuilder();
-        doc = builder.parse(Url);
+   protected NodeList queryXml(String query, QName qret) throws Exception{
+
+       XPathExpression expr = null;
         XPathFactory xFactory = XPathFactory.newInstance();
         XPath xpath = xFactory.newXPath();
-        //expr = xpath.compile("/xml_api_reply/weather/forecast_information");
         expr = xpath.compile(query);
-        Object result = expr.evaluate(doc, qret);
+        Object result = expr.evaluate(getDocument(), qret);
         NodeList nodes = (NodeList) result;
-        ProcesQuery(nodes);
         return nodes;
 
     }
-   protected abstract void  ProcesQuery(NodeList nodes);
-       public String getUrl() {
 
-        return Url;
+    protected abstract void setupUrlWithPoint(GpsPoint point);
+
+    protected abstract T populeaza() throws Exception;
+
+
+    public T getInfoFromPoint(GpsPoint point) throws Exception
+    {
+        setupUrlWithPoint(point);
+        T p=populeaza();
+        Url=auxBaseUrl;
+        return p;
     }
 
-    public void setUrl(String Url) {
-        this.Url = Url;
-    }
+
      
 }

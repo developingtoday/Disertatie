@@ -1,4 +1,4 @@
-package com.utils;
+package Utils;
 
 import Servicii.ElevationQueryWeb;
 import Servicii.ReverseGeocodeQueryWeb;

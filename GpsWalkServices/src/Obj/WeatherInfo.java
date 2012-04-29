@@ -8,8 +8,7 @@ package Obj;
  *
  * @author Revan
  */
-public class WeatherInfo {
-    private String Location;
+public class WeatherInfo extends GeoInfo  {
     private String Date;
     private String ConditionData;
     private String Umidity;
@@ -27,9 +26,7 @@ public class WeatherInfo {
         return Date;
     }
 
-    public String getLocation() {
-        return Location;
-    }
+
 
     public String getUmidity() {
         return Umidity;
@@ -47,9 +44,6 @@ public class WeatherInfo {
         this.Date = Date;
     }
 
-    public void setLocation(String Location) {
-        this.Location = Location;
-    }
 
     public void setUmidity(String Umidity) {
         this.Umidity = Umidity;
@@ -69,7 +63,7 @@ public class WeatherInfo {
 
     @Override
     public String toString() {
-        return ConditionData+" "+Date+" "+Location+" "+Temp+" "+Umidity+" "+Wind;
+        return super.toString()+" "+ConditionData+" "+Date+" "+" "+Temp+" "+Umidity+" "+Wind;
     }
     
     

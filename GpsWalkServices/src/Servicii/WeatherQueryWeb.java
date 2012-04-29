@@ -8,39 +8,34 @@ package Servicii;
  *
  * @author Revan
  */
+import Obj.GeoInfo;
+import Obj.GpsPoint;
 import Obj.WeatherInfo;
 import Abstract.AbstractXmlQuery;
-import java.io.IOException;
 
-import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
-import org.w3c.dom.Document;
+import Utils.ServicesFactory;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-public class WeatherQueryWeb extends AbstractXmlQuery {
+import java.text.Normalizer;
 
-    private String Url;
-    private final WeatherInfo Weather;
+public class WeatherQueryWeb extends AbstractXmlQuery<WeatherInfo> {
+
+
+
 
     public WeatherQueryWeb() {
-        Weather=new WeatherInfo();
+       super("http://www.google.com/ig/api?weather=");
     }
-    @Override
-    public void ProcesQuery(NodeList nodes) {
+
+    private WeatherInfo ProcesQuery(NodeList nodes) {
         if (nodes == null) {
-            return;
+            return new WeatherInfo();
         }
+        WeatherInfo Weather=new WeatherInfo();
         Node nod = null;
         Node aux = null;
         NamedNodeMap nmp = null;
@@ -64,7 +59,7 @@ public class WeatherQueryWeb extends AbstractXmlQuery {
                 nodeVal=nmp.getNamedItem("data").getNodeValue();
                 if(aux.getNodeName().equals("city"))
                 {
-                    Weather.setLocation(nodeVal);
+                    Weather.setCity(nodeVal);
                 }
                 if(aux.getNodeName().equals("forecast_date")){
                     Weather.setDate(nodeVal);
@@ -88,18 +83,36 @@ public class WeatherQueryWeb extends AbstractXmlQuery {
               
             }
         }
-    }
-    public void PopuleazaWeather() throws Exception
-    {
-        
-        this.QueryXml("/xml_api_reply/weather/forecast_information", XPathConstants.NODESET);
-        this.QueryXml("/xml_api_reply/weather/current_conditions", XPathConstants.NODESET);
-        
-    }
-
-    public WeatherInfo getWeather() {
         return Weather;
     }
+
+    @Override
+    protected void setupUrlWithPoint(GpsPoint point){
+        try{
+            String p= ServicesFactory.getReverseGeocodeService().getInfoFromPoint(point).getCity();
+            String test= Normalizer.normalize(p, Normalizer.Form.NFD);
+            String testCity=test.replaceAll("[^\\p{ASCII}]", "") ;
+            Url+=testCity+"&oe=ISO-8859-1";
+        }catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected WeatherInfo populeaza() throws Exception{
+        WeatherInfo w=new WeatherInfo();
+       String city= ProcesQuery(this.queryXml("/xml_api_reply/weather/forecast_information", XPathConstants.NODESET)).getCity();
+        w=ProcesQuery(this.queryXml("/xml_api_reply/weather/current_conditions", XPathConstants.NODESET));
+        w.setCity(city);
+        return w;
+    }
+
+
+
+
+
      
 
 }

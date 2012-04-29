@@ -11,15 +11,26 @@ import android.location.Location;
  */
 public class SensorData {
     double longitudine,latitudine,presiune,altitudine,viteza;
+    float distantaParcursa;
+
+    public float getDistantaParcursa() {
+        return distantaParcursa;
+    }
+
+    public void setDistantaParcursa(float distantaParcursa) {
+        this.distantaParcursa = distantaParcursa;
+    }
+
     float orientare;
 
-    public SensorData(double longitudine, double latitudine, double presiune, double altitudine, double viteza, float orientare) {
+    public SensorData(double longitudine, double latitudine, double presiune, double altitudine, double viteza, float orientare,float distanta) {
         this.longitudine = longitudine;
         this.latitudine = latitudine;
         this.presiune = presiune;
         this.altitudine = altitudine;
         this.viteza = viteza;
         this.orientare = orientare;
+        this.distantaParcursa=distanta;
     }
 
 
@@ -85,5 +96,10 @@ public class SensorData {
                 ", viteza=" + viteza +
                 ", orientare=" + orientare +
                 '}';
+    }
+
+    public boolean isEmpty()
+    {
+        return longitudine==0 && latitudine==0;
     }
 }

@@ -13,41 +13,35 @@ import javax.xml.xpath.XPathConstants;
  * Time: 8:27 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ElevationQueryWeb extends AbstractXmlQuery {
+public class ElevationQueryWeb extends AbstractXmlQuery<GpsPoint> {
 
-    private String TempUrl="https://maps.googleapis.com/maps/api/elevation/xml?locations=";
 
-    private GpsPoint point;
 
-    public void setPoint(GpsPoint value)
+
+    public ElevationQueryWeb()
     {
-        point=value;
-    }
-    public GpsPoint getPoint()
-    {
-        return point;
+        super("https://maps.googleapis.com/maps/api/elevation/xml?locations=");
     }
 
-    public void SetUrlWithPoint()
-    {
-       if(point==null) return;
-        String auxTemp=TempUrl;
-        auxTemp+=point.getLatitude()+","+point.getLongitude()+"&sensor=true";
-       setUrl(auxTemp);
-    }
-    public void Popupleaza()  throws Exception
-    {
-        SetUrlWithPoint();
-        String queryElevation="//ElevationResponse[status='OK']/result/elevation/text()";
-        NodeList nodes;
-        nodes=QueryXml(queryElevation, XPathConstants.NODESET);
-        if(nodes.getLength()==0) return;
-        point.setAltitude(Double.parseDouble(nodes.item(0).getNodeValue()));
 
+
+    @Override
+    protected void setupUrlWithPoint(GpsPoint point) {
+        if(point==null) return;
+         Url+=point.getLatitude()+","+point.getLongitude()+"&sensor=true";
     }
 
     @Override
-    public void ProcesQuery(NodeList nodes) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    protected GpsPoint populeaza() throws Exception {
+        GpsPoint p=new GpsPoint();
+        String queryElevation="//ElevationResponse[status='OK']/result/elevation/text()";
+        NodeList nodes;
+        nodes=queryXml(queryElevation, XPathConstants.NODESET);
+        if(nodes.getLength()==0) return p;
+        p.setAltitude(Double.parseDouble(nodes.item(0).getNodeValue()));
+        return p;
     }
+
+
+
 }

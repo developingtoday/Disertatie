@@ -2,24 +2,19 @@ package com.activities;
 
 import Obj.GeoInfo;
 import Obj.GpsPoint;
-import Servicii.ElevationQueryWeb;
-import Servicii.ReverseGeocodeQueryWeb;
+import Utils.ServicesFactory;
 import android.app.Fragment;
-import android.content.Context;
-import android.hardware.*;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.*;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.abstracte.INotifier;
 import com.listeners.LocationController;
 import com.obj.SensorData;
-import com.utils.Converters;
-import com.utils.ServicesFactory;
 
 
 import java.util.ArrayList;
@@ -32,14 +27,12 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class SensorActivity extends Fragment implements INotifier<SensorData> {
-    private TextView txtLatitude,txtLongitutde,txtOrientation,txtSpeed,txtDistance,txtAltitude,txtElevation,txtPressure;
-    private LocationController list;
+    private TextView txtLatitude, txtLongitude,txtOrientation,txtSpeed,txtDistance,txtAltitude,txtElevation,txtPressure;
     private TextView txtGeocode;
-    private ArrayList<Location> locationList;
-    private Button btnStop,btnGeocode,btnElevate,btnExport,btnStart;
-    private ReverseGeocodeQueryWeb queryWeb;
-    private ElevationQueryWeb _elevQ;
 
+    private Button btnStop,btnGeocode,btnElevate,btnExport,btnStart;
+    private     LocationController list;
+    private ControllerActions controllerActions;
     private Handler handler;
 
 
@@ -50,10 +43,11 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
 
         list=LocationController.getInstance(getActivity().getApplicationContext());
         list.setNotifier(this);
-        locationList=new ArrayList<Location>();
+        controllerActions=new ControllerActions();
+        handler=new Handler();
         View fragView = inflater.inflate(R.layout.sensoractivity, container, false);
         txtLatitude=(TextView)fragView.findViewById(R.id.txtLatitude);
-        txtLongitutde=(TextView)fragView.findViewById(R.id.txtLongitude);
+        txtLongitude =(TextView)fragView.findViewById(R.id.txtLongitude);
         txtOrientation=(TextView)fragView.findViewById(R.id.txtOrientation);
         txtSpeed=(TextView)fragView.findViewById(R.id.txtSpeed);
         txtDistance=(TextView)fragView.findViewById(R.id.txtDistance);
@@ -65,133 +59,111 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         btnGeocode=(Button)fragView.findViewById(R.id.btnGeocode);
         btnStop=(Button)fragView.findViewById(R.id.btnStop);
         btnStart=(Button)fragView.findViewById(R.id.btnStart);
-        btnStart.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        list.setListening(true);
-                    }
-                }
-        );
-        queryWeb= ServicesFactory.getReverseGeocodeService();
-        _elevQ=ServicesFactory.getElevationService();
-
-       btnElevate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Runnable runnable=new Runnable() {
-                    @Override
-                    public void run() {
-                        ElevateListener();
-                    }
-                };
-                new Thread(runnable).start();
-            }
-        });
-        btnGeocode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Runnable runnable=new Runnable() {
-                    @Override
-                    public void run() {
-                        //To change body of implemented methods use File | Settings | File Templates.
-                        GeocodeListener();
-                    }
-                };
-               new Thread(runnable).start();
-            }
-        });
-        btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StopListener();
-            }
-        });
+        btnElevate.setOnClickListener(controllerActions);
+        btnGeocode.setOnClickListener(controllerActions);
+        btnStart.setOnClickListener(controllerActions);
+        btnStop.setOnClickListener(controllerActions);
+;
         return fragView;
        }
 
 
-    private void ElevateListener()
-    {
-        try
-        {
 
-
-            GpsPoint p=new GpsPoint();
-            Location l=list.getLastLocation();
-            if(l==null) return;
-            p.setLatitude(l.getLatitude());
-            p.setLongitude(l.getLongitude());
-           _elevQ.setPoint(p);
-            _elevQ.Popupleaza();
-            txtElevation.post(new Runnable() {
-                @Override
-                public void run() {
-                    txtElevation.setText(Double.toString(_elevQ.getPoint().getAltitude()));
-                }
-            });
-        } catch (Exception ex)
-        {
-            ex.printStackTrace();
-            Log.d("Eroare",ex.getMessage(),ex.getCause());
-        }
-    }
-    private void GeocodeListener()
-    {
-        try{
-
-        GeoInfo g=new GeoInfo();
-        Location l=list.getLastLocation();
-        if(l==null) return;
-        g.setLatitude(l.getLatitude());
-        g.setLongitude(l.getLongitude());
-        queryWeb.setPoint(g);
-        queryWeb.PrepareUrl();
-        queryWeb.Populeaza();
-        //txtGeocode.setText(queryWeb.getPoint().getCity());
-         txtGeocode.post(new Runnable() {
-             @Override
-             public void run() {
-                 txtGeocode.setText(queryWeb.getPoint().getAdress());
-             }
-         });
-        }catch (Exception ex)
-        {
-            Log.e("Exceptie",ex.getMessage(),ex.getCause());
-            ex.printStackTrace();
-        }
-    }
-    private void StopListener()
+    private void stopListener()
     {
         list.closeListeners();
         txtAltitude.setText("0");
         txtDistance.setText("0");
         txtGeocode.setText("0");
         txtLatitude.setText("0");
-        txtLongitutde.setText("0");
+        txtLongitude.setText("0");
         txtSpeed.setText("0");
         txtElevation.setText("0");
+        txtOrientation.setText("0");
+        txtPressure.setText("0");
     }
-
-    Double actualDistance;
-    private void CalculateDistance()    //TODO mutat in SensorDataManager
-    {
-        actualDistance=Double.parseDouble(txtDistance.getText().toString());
-        if(locationList.size()<=1) return;
-        actualDistance+=(double)locationList.get(locationList.size()-1).distanceTo(locationList.get(locationList.size()-2));
-        txtDistance.setText(actualDistance.toString());
-    }
-
     @Override
     public void notifyView(SensorData l) {
         txtLatitude.setText(Double.toString(l.getLatitudine()));
-        txtLongitutde.setText(Double.toString(l.getLongitudine()));
+        txtLongitude.setText(Double.toString(l.getLongitudine()));
         txtAltitude.setText(Double.toString(l.getAltitudine()));
         txtSpeed.setText(Double.toString(l.getViteza()));
         txtPressure.setText(Double.toString(l.getPresiune()));
         txtOrientation.setText(Float.toString(l.getOrientare()));
+        txtDistance.setText(Float.toString(l.getDistantaParcursa()));
     }
 
+    GpsPoint getGpsPoint()
+    {
+        GpsPoint point=new GpsPoint();
+        point.setLatitude(list.getLastLocation().getLatitude());
+        point.setLongitude(list.getLastLocation().getLongitude());
+        return point;
+    }
+
+
+    class ControllerActions implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+
+            if(view.equals(btnElevate))
+            {
+                Runnable runnable=new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+
+                        final GpsPoint p= ServicesFactory.getElevationService().getInfoFromPoint(getGpsPoint());
+                         handler.post(new Runnable() {
+                             @Override
+                             public void run() {
+                               txtElevation.setText(Double.toString(p.getAltitude()));
+                             }
+                         });
+                        }catch (Exception ex)
+                        {
+                            Log.e("Exceptie",ex.getMessage(),ex);
+                            ex.printStackTrace();
+                        }
+                    }
+                };
+                new Thread(runnable).start();
+            }
+            if(view.equals(btnGeocode))
+            {
+                Runnable runnable=new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+
+                           final GeoInfo p= ServicesFactory.getReverseGeocodeService().getInfoFromPoint(getGpsPoint());
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    txtGeocode.setText(p.getCity());
+                                }
+                            });
+                        }catch (Exception ex)
+                        {
+                            Log.e("Exceptie",ex.getMessage(),ex);
+                            ex.printStackTrace();
+                        };
+                    }
+                };
+                new Thread(runnable).start();
+            }
+            if(view.equals(btnStart))
+            {
+                Toast.makeText(getActivity().getApplicationContext(),"Listening started",Toast.LENGTH_SHORT).show();
+                list.setListening(true);
+            }
+            if(view.equals(btnStop))
+            {  Toast.makeText(getActivity().getApplicationContext(),"Listening stopped",Toast.LENGTH_SHORT).show();
+               stopListener();
+            }
+
+        }
+    }
 
 
 
