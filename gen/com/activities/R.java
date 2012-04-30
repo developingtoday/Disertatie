@@ -17,7 +17,7 @@ public final class R {
         public static final int btnElevate=0x7f050010;
         public static final int btnExport=0x7f050011;
         public static final int btnGeocode=0x7f05000f;
-        public static final int btnGetWeather=0x7f050016;
+        public static final int btnGetWeather=0x7f050017;
         public static final int btnStart=0x7f050012;
         public static final int btnStop=0x7f05000e;
         public static final int fragment_place=0x7f050000;
@@ -29,14 +29,15 @@ public final class R {
         public static final int txtCity=0x7f050013;
         public static final int txtDistance=0x7f05000a;
         public static final int txtElevation=0x7f05000c;
-        public static final int txtForecast=0x7f050015;
         public static final int txtGeocode=0x7f05000b;
+        public static final int txtHumidity=0x7f050015;
         public static final int txtLatitude=0x7f050005;
         public static final int txtLongitude=0x7f050006;
         public static final int txtOrientation=0x7f050008;
         public static final int txtPressure=0x7f05000d;
         public static final int txtSpeed=0x7f050009;
         public static final int txtTemp=0x7f050014;
+        public static final int txtWind=0x7f050016;
     }
     public static final class layout {
         public static final int main=0x7f030000;

@@ -15,7 +15,7 @@ import org.w3c.dom.NodeList;
  *
  * @author Revan
  */
-public class ReverseGeocodeQueryWeb extends AbstractXmlQuery<GeoInfo> {
+public class GoogleReverseGeocodeQueryWeb extends AbstractXmlQuery<GeoInfo> {
 
     private GeoInfo Point;
 
@@ -28,7 +28,7 @@ public class ReverseGeocodeQueryWeb extends AbstractXmlQuery<GeoInfo> {
     }
     private String urlTemp = "http://maps.googleapis.com/maps/api/geocode/xml?latlng=44.200172,28.625323&sensor=true";
 
-    public ReverseGeocodeQueryWeb()
+    public GoogleReverseGeocodeQueryWeb()
     {
         super("http://maps.googleapis.com/maps/api/geocode/xml?latlng=");
     }

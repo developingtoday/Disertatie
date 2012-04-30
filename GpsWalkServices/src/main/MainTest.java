@@ -1,10 +1,5 @@
 package main;
 
-import Obj.GeoInfo;
-import Obj.GpsPoint;
-import Servicii.ElevationQueryWeb;
-import Servicii.ReverseGeocodeQueryWeb;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Revan
@@ -19,8 +14,8 @@ public class MainTest {
 //           p.setLatitude(44.200172);    //45.425805,25.970564
 //           p.setLongitude(28.625323);    //44.563616,27.364256
 //                                         //44.200172,28.625323
-//          // ReverseGeocodeQueryWeb r=new ReverseGeocodeQueryWeb(p);
-//           ElevationQueryWeb r=new ElevationQueryWeb();
+//          // GoogleReverseGeocodeQueryWeb r=new GoogleReverseGeocodeQueryWeb(p);
+//           GoogleElevationQueryWeb r=new GoogleElevationQueryWeb();
 //            r.setPoint(p);
 //          r.Popupleaza();
 //           System.out.println(r.getPoint().toString());

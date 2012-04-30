@@ -22,12 +22,12 @@ import org.w3c.dom.NodeList;
 
 import java.text.Normalizer;
 
-public class WeatherQueryWeb extends AbstractXmlQuery<WeatherInfo> {
+public class GoogleWeatherQueryWeb extends AbstractXmlQuery<WeatherInfo> {
 
 
 
 
-    public WeatherQueryWeb() {
+    public GoogleWeatherQueryWeb() {
        super("http://www.google.com/ig/api?weather=");
     }
 
@@ -92,7 +92,7 @@ public class WeatherQueryWeb extends AbstractXmlQuery<WeatherInfo> {
             String p= ServicesFactory.getReverseGeocodeService().getInfoFromPoint(point).getCity();
             String test= Normalizer.normalize(p, Normalizer.Form.NFD);
             String testCity=test.replaceAll("[^\\p{ASCII}]", "") ;
-            Url+=testCity+"&oe=ISO-8859-1";
+            Url+=testCity+"&hl=ro&oe=ISO-8859-1";
         }catch (Exception ex)
         {
             ex.printStackTrace();

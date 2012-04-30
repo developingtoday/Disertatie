@@ -32,13 +32,27 @@
     <TableRow>
         <TextView
                 android:layout_column="1"
-                android:text="Forecast"
+                android:text="Humidity"
                 android:padding="3dip" />
         <TextView
-                android:id="@+id/txtForecast"
+                android:id="@+id/txtHumidity"
                 android:text="0"
                 android:gravity="right"
                 android:padding="3dip" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:layout_column="1"
+                  android:text="Wind"
+                  android:padding="3dip"
+                  />
+        <TextView
+                android:id="@+id/txtWind"
+                android:text="0"
+                android:gravity="right"
+                android:padding="3dip"
+                />
+
     </TableRow>
 
 

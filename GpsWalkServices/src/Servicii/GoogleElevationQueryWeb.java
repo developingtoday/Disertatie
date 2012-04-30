@@ -13,12 +13,12 @@ import javax.xml.xpath.XPathConstants;
  * Time: 8:27 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ElevationQueryWeb extends AbstractXmlQuery<GpsPoint> {
+public class GoogleElevationQueryWeb extends AbstractXmlQuery<GpsPoint> {
 
 
 
 
-    public ElevationQueryWeb()
+    public GoogleElevationQueryWeb()
     {
         super("https://maps.googleapis.com/maps/api/elevation/xml?locations=");
     }

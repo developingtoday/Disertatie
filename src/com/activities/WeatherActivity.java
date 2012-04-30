@@ -1,9 +1,8 @@
 package com.activities;
 
-import Obj.GeoInfo;
 import Obj.GpsPoint;
 import Obj.WeatherInfo;
-import Servicii.WeatherQueryWeb;
+import Servicii.GoogleWeatherQueryWeb;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +23,7 @@ import Utils.ServicesFactory;
  * To change this template use File | Settings | File Templates.
  */
 public class WeatherActivity extends Fragment {
-    private TextView txtCity,txtTemp,txtForecast;
+    private TextView txtCity,txtTemp,txtHumidity,txtWind;
     private Button btnActualizeaza;
     private Handler handler;
     private LocationController lc;
@@ -35,7 +34,8 @@ public class WeatherActivity extends Fragment {
         View fragView = inflater.inflate(R.layout.weatheractivity, container, false);
 
         txtCity=(TextView)fragView.findViewById(R.id.txtCity);
-        txtForecast=(TextView)fragView.findViewById(R.id.txtForecast);
+        txtHumidity=(TextView)fragView.findViewById(R.id.txtHumidity);
+        txtWind=(TextView)fragView.findViewById(R.id.txtWind);
         txtTemp=(TextView)fragView.findViewById(R.id.txtTemp);
         handler=new Handler();
         btnActualizeaza=(Button)fragView.findViewById(R.id.btnGetWeather);
@@ -58,33 +58,12 @@ public class WeatherActivity extends Fragment {
     private void ShowInfo() {
         //TODO verificat cazul cand nu exista conexiune la internet
         try{
-        final WeatherQueryWeb q= ServicesFactory.getWeatherService();
+        final GoogleWeatherQueryWeb q= ServicesFactory.getWeatherService();
 
           final  WeatherInfo         w;
 
 
 
-//             GeoInfo g=lc.getGeocodingFromLocation(lc.getLastLocation());
-//
-//            Toast.makeText(getActivity().getApplicationContext(),g.getCountry()+" "+g.getCity(),100).show();
-
-//            ReverseGeocodeQueryWeb queryWeb=ServicesFactory.getReverseGeocodeService();
-//            g.setLatitude(lc.getLastLocation().getLatitude());
-//            g.setLongitude(lc.getLastLocation().getLongitude());
-//            queryWeb.setPoint(g);
-//            queryWeb.PrepareUrl();
-//            queryWeb.Populeaza();
-//            String city=queryWeb.getPoint().getCity();
-//            url="http://www.google.com/ig/api?weather="+city;
-//            if(l!=null)
-//            {
-//                url="http://www.google.com/ig/api?weather=,,,";
-//                String lng=String.valueOf(l.getLongitudeE6());
-//                String lat=String.valueOf(l.getLatitudeE6());
-//                url+=lat;
-//                url+=",";
-//                url+=lng;
-//            }
         GpsPoint g=new GpsPoint();
             g.setLatitude(lc.getLastLocation().getLatitude());
             g.setLongitude(lc.getLastLocation().getLongitude());
@@ -94,6 +73,8 @@ public class WeatherActivity extends Fragment {
             public void run() {
                 txtCity.setText(w.getCity());
                 txtTemp.setText(w.getTemp());
+                txtWind.setText(w.getWind());
+                txtHumidity.setText(w.getUmidity());
             }
         });
         }catch(Exception ex)
