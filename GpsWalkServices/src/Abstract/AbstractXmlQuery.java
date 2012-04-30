@@ -60,7 +60,7 @@ public abstract class AbstractXmlQuery<T extends GpsPoint> {
 
     }
 
-    protected abstract void setupUrlWithPoint(GpsPoint point);
+    protected abstract void setupUrlWithPoint(GpsPoint point) throws Exception;
 
     protected abstract T populeaza() throws Exception;
 

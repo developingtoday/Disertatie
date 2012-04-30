@@ -11,33 +11,53 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int pinclip=0x7f020000;
+        public static final int chance_of_rain=0x7f020000;
+        public static final int chance_of_snow=0x7f020001;
+        public static final int chance_of_storm=0x7f020002;
+        public static final int cloudy=0x7f020003;
+        public static final int flurries=0x7f020004;
+        public static final int fog=0x7f020005;
+        public static final int icy=0x7f020006;
+        public static final int mist=0x7f020007;
+        public static final int mostly_cloudy=0x7f020008;
+        public static final int mostly_sunny=0x7f020009;
+        public static final int partly_cloudy=0x7f02000a;
+        public static final int pinclip=0x7f02000b;
+        public static final int rain=0x7f02000c;
+        public static final int showers=0x7f02000d;
+        public static final int sleet=0x7f02000e;
+        public static final int smoke=0x7f02000f;
+        public static final int snow=0x7f020010;
+        public static final int storm=0x7f020011;
+        public static final int sunny=0x7f020012;
     }
     public static final class id {
         public static final int btnElevate=0x7f050010;
         public static final int btnExport=0x7f050011;
         public static final int btnGeocode=0x7f05000f;
-        public static final int btnGetWeather=0x7f050017;
+        public static final int btnGetWeather=0x7f050019;
         public static final int btnStart=0x7f050012;
         public static final int btnStop=0x7f05000e;
         public static final int fragment_place=0x7f050000;
         public static final int gmapactivity=0x7f050001;
+        public static final int imgViewWeather=0x7f050013;
         public static final int map_view=0x7f050002;
         public static final int titlePlot=0x7f050003;
         public static final int titleRoutest=0x7f050004;
         public static final int txtAltitude=0x7f050007;
-        public static final int txtCity=0x7f050013;
+        public static final int txtCity=0x7f050015;
+        public static final int txtCondition=0x7f050014;
         public static final int txtDistance=0x7f05000a;
         public static final int txtElevation=0x7f05000c;
         public static final int txtGeocode=0x7f05000b;
-        public static final int txtHumidity=0x7f050015;
+        public static final int txtHumidity=0x7f050017;
         public static final int txtLatitude=0x7f050005;
         public static final int txtLongitude=0x7f050006;
         public static final int txtOrientation=0x7f050008;
         public static final int txtPressure=0x7f05000d;
         public static final int txtSpeed=0x7f050009;
-        public static final int txtTemp=0x7f050014;
-        public static final int txtWind=0x7f050016;
+        public static final int txtTemp=0x7f050016;
+        public static final int txtWind=0x7f050018;
     }
     public static final class layout {
         public static final int main=0x7f030000;

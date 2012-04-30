@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.listeners.LocationController;
 import Utils.ServicesFactory;
 
@@ -23,7 +25,8 @@ import Utils.ServicesFactory;
  * To change this template use File | Settings | File Templates.
  */
 public class WeatherActivity extends Fragment {
-    private TextView txtCity,txtTemp,txtHumidity,txtWind;
+    private TextView txtCity,txtTemp,txtHumidity,txtWind,txtCondtion;
+    private ImageView imgViewWeatherIcon;
     private Button btnActualizeaza;
     private Handler handler;
     private LocationController lc;
@@ -37,7 +40,10 @@ public class WeatherActivity extends Fragment {
         txtHumidity=(TextView)fragView.findViewById(R.id.txtHumidity);
         txtWind=(TextView)fragView.findViewById(R.id.txtWind);
         txtTemp=(TextView)fragView.findViewById(R.id.txtTemp);
+        txtCondtion=(TextView)fragView.findViewById(R.id.txtCondition);
+        imgViewWeatherIcon=(ImageView)fragView.findViewById(R.id.imgViewWeather);
         handler=new Handler();
+        lc=LocationController.getInstance(getActivity().getApplicationContext());
         btnActualizeaza=(Button)fragView.findViewById(R.id.btnGetWeather);
         btnActualizeaza.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +55,7 @@ public class WeatherActivity extends Fragment {
                     }
                 };
                 new Thread(runnable).start();
-        lc=LocationController.getInstance(getActivity().getApplicationContext());
+
             }
         });
         return fragView;
@@ -60,7 +66,7 @@ public class WeatherActivity extends Fragment {
         try{
         final GoogleWeatherQueryWeb q= ServicesFactory.getWeatherService();
 
-          final  WeatherInfo         w;
+          final  WeatherInfo w;
 
 
 
@@ -68,6 +74,7 @@ public class WeatherActivity extends Fragment {
             g.setLatitude(lc.getLastLocation().getLatitude());
             g.setLongitude(lc.getLastLocation().getLongitude());
         w=q.getInfoFromPoint(g);
+
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -75,12 +82,24 @@ public class WeatherActivity extends Fragment {
                 txtTemp.setText(w.getTemp());
                 txtWind.setText(w.getWind());
                 txtHumidity.setText(w.getUmidity());
+                txtCondtion.setText(w.getConditionData());
+                imgViewWeatherIcon.setImageResource(getActivity().getResources().getIdentifier(w.getIconData(),"drawable",getActivity().getPackageName()));
+
             }
         });
-        }catch(Exception ex)
+        }catch(final Exception ex)
         {
+           handler.post(new Runnable() {
+               @Override
+               public void run() {
+                   Toast.makeText(getActivity().getApplicationContext(),ex.toString(),Toast.LENGTH_SHORT).show();
+               }
+           }) ;
+
            ex.printStackTrace();
-           Log.d("Exceptie", ex.getMessage(), ex.getCause());
+           Log.e("Exceptie", ex.getMessage(), ex.getCause());
         }
     }
+
+
 }

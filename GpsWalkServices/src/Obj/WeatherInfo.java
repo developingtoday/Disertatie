@@ -14,6 +14,15 @@ public class WeatherInfo extends GeoInfo  {
     private String Umidity;
     private String Wind;
     private String Temp;
+    private String IconData;
+
+    public String getIconData() {
+        return IconData;
+    }
+
+    public void setIconData(String iconData) {
+        IconData = iconData;
+    }
 
     public WeatherInfo() {
     }

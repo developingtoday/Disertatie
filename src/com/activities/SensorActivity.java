@@ -4,7 +4,6 @@ import Obj.GeoInfo;
 import Obj.GpsPoint;
 import Utils.ServicesFactory;
 import android.app.Fragment;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,9 +14,6 @@ import android.widget.Toast;
 import com.abstracte.INotifier;
 import com.listeners.LocationController;
 import com.obj.SensorData;
-
-
-import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -143,8 +139,14 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
                                     txtGeocode.setText(p.getCity());
                                 }
                             });
-                        }catch (Exception ex)
+                        }catch (final Exception ex)
                         {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getActivity().getApplicationContext(),ex.toString(),Toast.LENGTH_SHORT).show();
+                                }
+                            });
                             Log.e("Exceptie",ex.getMessage(),ex);
                             ex.printStackTrace();
                         };

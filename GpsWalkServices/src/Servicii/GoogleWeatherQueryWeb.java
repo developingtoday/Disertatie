@@ -57,6 +57,11 @@ public class GoogleWeatherQueryWeb extends AbstractXmlQuery<WeatherInfo> {
                     continue;
                 }
                 nodeVal=nmp.getNamedItem("data").getNodeValue();
+                if(aux.getNodeName().equals("icon"))
+                {
+                  Weather.setIconData(nodeVal.replace("/ig/images/weather/","").replace(".gif",""));
+
+                }
                 if(aux.getNodeName().equals("city"))
                 {
                     Weather.setCity(nodeVal);
@@ -87,16 +92,13 @@ public class GoogleWeatherQueryWeb extends AbstractXmlQuery<WeatherInfo> {
     }
 
     @Override
-    protected void setupUrlWithPoint(GpsPoint point){
-        try{
+    protected void setupUrlWithPoint(GpsPoint point) throws Exception{
+
             String p= ServicesFactory.getReverseGeocodeService().getInfoFromPoint(point).getCity();
             String test= Normalizer.normalize(p, Normalizer.Form.NFD);
             String testCity=test.replaceAll("[^\\p{ASCII}]", "") ;
             Url+=testCity+"&hl=ro&oe=ISO-8859-1";
-        }catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
+
 
     }
 
