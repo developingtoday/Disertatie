@@ -59,11 +59,18 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         btnGeocode.setOnClickListener(controllerActions);
         btnStart.setOnClickListener(controllerActions);
         btnStop.setOnClickListener(controllerActions);
-;
         return fragView;
        }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     private void stopListener()
     {
@@ -149,7 +156,7 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
                             });
                             Log.e("Exceptie",ex.getMessage(),ex);
                             ex.printStackTrace();
-                        };
+                        }
                     }
                 };
                 new Thread(runnable).start();

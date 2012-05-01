@@ -100,7 +100,7 @@ public class LocationController implements LocationListener {
         if(!isListening) return;
         if(!manager.getLastSensorDataKnown().isEmpty()){
             Location.distanceBetween(manager.getLastSensorDataKnown().getLatitudine(),manager.getLastSensorDataKnown().getLongitudine(),location.getLatitude(), location.getLongitude(), results);
-            distanta=results[0];
+            distanta+=results[0];
         }
 
         manager.addData(new SensorData(location.getLongitude(),location.getLatitude(),sensorEventListener.getLastPressureValue(),location.getAltitude(),location.getSpeed(),oLic.getLastOrientation(),distanta));

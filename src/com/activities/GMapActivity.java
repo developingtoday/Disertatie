@@ -137,7 +137,7 @@ public class GMapActivity extends MapActivity implements INotifier<Location> {
                             long when) {
             // TODO Auto-generated method stub
             Projection projection = mapView.getProjection();
-            if (shadow == false) {
+            if (!shadow) {
 
                 Paint paint = new Paint();
                 paint.setAntiAlias(true);

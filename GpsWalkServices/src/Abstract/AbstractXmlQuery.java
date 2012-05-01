@@ -55,8 +55,7 @@ public abstract class AbstractXmlQuery<T extends GpsPoint> {
         XPath xpath = xFactory.newXPath();
         expr = xpath.compile(query);
         Object result = expr.evaluate(getDocument(), qret);
-        NodeList nodes = (NodeList) result;
-        return nodes;
+       return (NodeList) result;
 
     }
 
@@ -67,6 +66,7 @@ public abstract class AbstractXmlQuery<T extends GpsPoint> {
 
     public T getInfoFromPoint(GpsPoint point) throws Exception
     {
+        Url=auxBaseUrl;
         setupUrlWithPoint(point);
         T p=populeaza();
         Url=auxBaseUrl;
