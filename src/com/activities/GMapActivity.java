@@ -4,9 +4,13 @@ import android.graphics.*;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 import com.abstracte.INotifier;
 import com.google.android.maps.*;
 import com.listeners.LocationController;
+import com.obj.SensorData;
 import com.utils.Converters;
 
 import java.util.List;
@@ -19,29 +23,36 @@ import java.util.Stack;
  * Time: 10:12 AM
  * To change this template use File | Settings | File Templates.
  */
-public class GMapActivity extends MapActivity implements INotifier<Location> {
+public class GMapActivity extends MapActivity implements INotifier<SensorData> {
     private MapController _mapController;
     private MapView _mapView;
     private LocationController gpsLoc;
     private GeoPoint point;
      List<Overlay> mapOverlays;
      MyLocationOverlay myLoc;
+    Button btnStartUp;
+  WeatherActivity w;
+
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mapactivity);
+
         _mapView=(MapView)findViewById(R.id.map_view);
         _mapController=_mapView.getController();
-        _mapView.setBuiltInZoomControls(true);
         mapOverlays=_mapView.getOverlays();
         gpsLoc=LocationController.getInstance(getApplicationContext());
         setupMyLocation();
         _mapView.invalidate();
-        notifyView(gpsLoc.getLastLocation());
+        gpsLoc.setNotifier(this);
+
 
     }
+
+
      GeoPoint gpAux;
-    public void notifyView(Location location) {
+    public void notifyView(SensorData location) {
         
         try{
 
@@ -50,6 +61,7 @@ public class GMapActivity extends MapActivity implements INotifier<Location> {
           _listaLocatii.add(gpAux);
             if(_listaLocatii.size()<=1) return;
             mapOverlays.add(new DrawLocationOverlay(_listaLocatii.elementAt(_listaLocatii.size()-2),_listaLocatii.elementAt(_listaLocatii.size()-1)));
+           //DrawMapList();
             _mapView.postInvalidate();
         }catch (Exception ex)
         {
@@ -62,12 +74,12 @@ public class GMapActivity extends MapActivity implements INotifier<Location> {
     {
        super.onResume();
       myLoc.enableMyLocation();
-      myLoc.runOnFirstFix(new Runnable() {
-          @Override
-          public void run() {
-            DrawMapList();
-          }
-      });
+//      myLoc.runOnFirstFix(new Runnable() {
+//          @Override
+//          public void run() {
+//            DrawMapList();
+//          }
+//      });
 
     }
 
@@ -95,14 +107,14 @@ public class GMapActivity extends MapActivity implements INotifier<Location> {
     {
         myLoc=new MyLocationOverlay(this,_mapView);
         myLoc.enableCompass();
-        myLoc.enableMyLocation();
+        //myLoc.enableMyLocation();
         mapOverlays.add(myLoc);
-        myLoc.runOnFirstFix(new Runnable() {
-            @Override
-            public void run() {
-                DrawMapList();
-            }
-        });
+//        myLoc.runOnFirstFix(new Runnable() {
+//            @Override
+//            public void run() {
+//                DrawMapList();
+//            }
+//        });
 
     }
     private void DrawMapList()

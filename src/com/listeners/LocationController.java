@@ -1,7 +1,11 @@
 package com.listeners;
 
 import Obj.GeoInfo;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -9,10 +13,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.*;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 import com.abstracte.INotifier;
 import com.abstracte.ISensorDataManager;
+import com.activities.MainActivity;
+import com.activities.R;
 import com.google.android.maps.GeoPoint;
 import com.managers.SensorDataManager;
 import com.obj.SensorData;
@@ -32,13 +39,14 @@ import java.util.Stack;
  * Time: 8:29 PM
  * To change this template use File | Settings | File Templates.
  */
-public class LocationController implements LocationListener {
+public class LocationController implements LocationListener,GpsStatus.Listener {
 
     public static  final String TAG="LocationController";
 
 
 
-    public  boolean isListening;
+    public  boolean isListening,isGpsFix;
+    public long lastTimeLocationFix;
     public static LocationController staticController;
 
     private Sensor pressureSensor,acell,magnetic,orientation;
@@ -50,11 +58,12 @@ public class LocationController implements LocationListener {
     private CompassListener compassListener;
     private OrientationCompassListener oLic;
     private Geocoder geocoder;
-
+    private Context context;
 
     private LocationController(Context context)
 
     {
+        this.context=context;
         sManager=(SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         pressureSensor=sManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
         acell=sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -72,6 +81,7 @@ public class LocationController implements LocationListener {
 
         locationManager=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,10,this);
+        locationManager.addGpsStatusListener(this);
 
 
         manager=new SensorDataManager();
@@ -102,7 +112,7 @@ public class LocationController implements LocationListener {
             Location.distanceBetween(manager.getLastSensorDataKnown().getLatitudine(),manager.getLastSensorDataKnown().getLongitudine(),location.getLatitude(), location.getLongitude(), results);
             distanta+=results[0];
         }
-
+        lastTimeLocationFix= SystemClock.elapsedRealtime();
         manager.addData(new SensorData(location.getLongitude(),location.getLatitude(),sensorEventListener.getLastPressureValue(),location.getAltitude(),location.getSpeed(),oLic.getLastOrientation(),distanta));
         if(notifier!=null) notifier.notifyView(manager.getLastSensorDataKnown());
 
@@ -126,6 +136,7 @@ public class LocationController implements LocationListener {
     public void closeListeners()
     {
         isListening=false;
+        distanta=0;
         manager.flushToDataSource();
 
     }
@@ -144,6 +155,31 @@ public class LocationController implements LocationListener {
          GeoInfo g=new GeoInfo();
         g.setCity(a.getLocality());
         return g;
+    }
+
+    @Override
+    public void onGpsStatusChanged(int i) {
+        if(!isListening) return;
+        switch (i){
+            case GpsStatus.GPS_EVENT_FIRST_FIX:
+                isGpsFix=true;
+                break;
+            case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+                if(!manager.getLastSensorDataKnown().isEmpty()) isGpsFix=(SystemClock.elapsedRealtime()-lastTimeLocationFix)<3000;
+                if(isGpsFix)
+                {
+                    //notificare status bar
+                    NotificationManager nman=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+                    Notification.Builder nbuilder=new Notification.Builder(context);
+                    nbuilder.setContentIntent(PendingIntent.getActivity(context,0,new Intent(context, MainActivity.class),PendingIntent.FLAG_CANCEL_CURRENT));
+                    nbuilder.setSmallIcon(R.drawable.chance_of_rain);
+                    nbuilder.setContentText("Gps fix acquired");
+                    nbuilder.setContentTitle("GpsWalk");
+                    nman.notify(0,nbuilder.getNotification());
+                }
+            break;
+        }
+
     }
 
     class PressureListener implements SensorEventListener{

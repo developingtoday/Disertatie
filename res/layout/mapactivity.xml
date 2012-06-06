@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gmapactivity"
         android:layout_width="match_parent"
@@ -16,4 +16,4 @@
             android:apiKey="0fzReuwETvt1fA3j6QjGnBo3g8dxny2ISHrK65g"
             />
 
-</LinearLayout>
+</FrameLayout>

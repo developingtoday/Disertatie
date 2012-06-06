@@ -1,7 +1,9 @@
 package com.utils;
 
+import android.hardware.Sensor;
 import android.location.Location;
 import com.google.android.maps.GeoPoint;
+import com.obj.SensorData;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,9 +23,16 @@ public class Converters {
        if(azimuth==360 && azimuth==0) return "N";
         return Float.toString(azimuth);
     }
+
+
     public static GeoPoint fromLocation2GeoPoint(Location location)
     {
         if(location==null) return null;
         return new GeoPoint((int)(location.getLatitude()*1E6),(int)(location.getLongitude()*1E6));
+    }
+    public static GeoPoint fromLocation2GeoPoint(SensorData location)
+    {
+        if(location==null) return null;
+        return new GeoPoint((int)(location.getLatitudine()*1E6),(int)(location.getLongitudine()*1E6));
     }
 }
