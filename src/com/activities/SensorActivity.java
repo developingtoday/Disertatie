@@ -42,7 +42,7 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         super.onCreate(savedInstanceState);
 
         list=LocationController.getInstance(getActivity().getApplicationContext());
-        list.setNotifier(this);
+        list.addNotifier(this);
         controllerActions=new ControllerActions();
         handler=new Handler();
         View fragView = inflater.inflate(R.layout.sensoractivity, container, false);

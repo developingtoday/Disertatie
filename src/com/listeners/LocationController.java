@@ -31,6 +31,7 @@ import java.text.Normalizer;
 import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
+import java.util.Vector;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,9 +50,12 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
     public long lastTimeLocationFix;
     public static LocationController staticController;
 
+
+    private Vector<INotifier<SensorData>> notifiers;
+
     private Sensor pressureSensor,acell,magnetic,orientation;
     private SensorManager sManager;
-    private INotifier<SensorData> notifier;
+
     private LocationManager locationManager;
     private ISensorDataManager manager;
     private PressureListener sensorEventListener;
@@ -64,6 +68,7 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
 
     {
         this.context=context;
+        notifiers=new Vector<INotifier<SensorData>>();
         sManager=(SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         pressureSensor=sManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
         acell=sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -93,9 +98,21 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
         return staticController;
     }
 
-    public void setNotifier(INotifier<SensorData> notifier)
+    public void addNotifier(INotifier<SensorData> notifier)
     {
-        this.notifier=notifier;
+        notifiers.add(notifier);
+    }
+    public void removeNotifier(INotifier<SensorData> notifier)
+    {
+        notifiers.remove(notifier);
+    }
+
+    private void sendNotification(SensorData sensorData)
+    {
+      for(INotifier<SensorData> n:notifiers)
+      {
+          n.notifyView(sensorData);
+      }
     }
 
     public void setListening(boolean listening) {
@@ -114,7 +131,7 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
         }
         lastTimeLocationFix= SystemClock.elapsedRealtime();
         manager.addData(new SensorData(location.getLongitude(),location.getLatitude(),sensorEventListener.getLastPressureValue(),location.getAltitude(),location.getSpeed(),oLic.getLastOrientation(),distanta));
-        if(notifier!=null) notifier.notifyView(manager.getLastSensorDataKnown());
+        sendNotification(manager.getLastSensorDataKnown());
 
     }
 

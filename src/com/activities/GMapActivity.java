@@ -47,6 +47,7 @@ public class GMapActivity extends MapActivity implements INotifier<SensorData> {
         setupMapController();
         _viewFrag=(ViewGroup)findViewById(R.id.fragPlaceHolder);
         actionBar=getActionBar();
+        ShowFragment(Factory.getInstanceSensorActivity(),"Sensor");
     }
 
     @Override
@@ -79,6 +80,8 @@ public class GMapActivity extends MapActivity implements INotifier<SensorData> {
             case R.id.mnuStop:
                 Toast.makeText(getApplicationContext(),"Listening stopped",Toast.LENGTH_SHORT).show();
                 gpsLoc.setListening(false);
+                mapOverlays.clear();
+                mapOverlays.add(myLoc);
                 return false;
             default:
                 return super.onOptionsItemSelected(item);
@@ -110,7 +113,7 @@ public class GMapActivity extends MapActivity implements INotifier<SensorData> {
         gpsLoc=LocationController.getInstance(getApplicationContext());
         setupMyLocation();
         _mapView.invalidate();
-        gpsLoc.setNotifier(this);
+        gpsLoc.addNotifier(this);
     }
 
      GeoPoint gpAux;

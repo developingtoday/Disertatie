@@ -16,19 +16,11 @@
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcb41177-ad91-4189-b57f-3569c3d82ff8" name="Default" comment="Refactor la mapView, pregatire sa fac hacku sa mearga in fragment">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/menu/menusensor.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/utils/DrawLocationOverlay.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/utils/Factory.java" />
+    <list default="true" id="dcb41177-ad91-4189-b57f-3569c3d82ff8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GpsWalk.iml" afterPath="$PROJECT_DIR$/GpsWalk.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/com/activities/R.java" afterPath="$PROJECT_DIR$/gen/com/activities/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/mapactivity.xml" afterPath="$PROJECT_DIR$/res/layout/mapactivity.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/sensoractivity.xml" afterPath="$PROJECT_DIR$/res/layout/sensoractivity.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/activities/GMapActivity.java" afterPath="$PROJECT_DIR$/src/com/activities/GMapActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/activities/SensorActivity.java" afterPath="$PROJECT_DIR$/src/com/activities/SensorActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/activities/WeatherActivity.java" afterPath="$PROJECT_DIR$/src/com/activities/WeatherActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/listeners/LocationController.java" afterPath="$PROJECT_DIR$/src/com/listeners/LocationController.java" />
     </list>
     <ignored path="GpsWalk.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -95,33 +87,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SensorActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="GMapActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/activities/GMapActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="49" column="67" selection-start="1466" selection-end="1466" vertical-scroll-proportion="1.0471015">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SensorActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/activities/SensorActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="156" column="53" selection-start="5414" selection-end="5414" vertical-scroll-proportion="6.6435986">
+            <state line="44" column="29" selection-start="1432" selection-end="1432" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#4699#5428#0" expanded="true" />
-                <element signature="e#5538#6487#0" expanded="true" />
-                <element signature="e#6476#6477#0" expanded="true" />
                 <element signature="class#ControllerActions#0;class#SensorActivity#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GMapActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/activities/GMapActivity.java">
+      <file leaf-file-name="LocationController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/listeners/LocationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="0" selection-start="1768" selection-end="1768" vertical-scroll-proportion="0.0">
+            <state line="113" column="33" selection-start="3857" selection-end="3857" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="menusensor.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/menu/menusensor.xml">
+      <file leaf-file-name="WeatherActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/activities/WeatherActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="31" selection-start="265" selection-end="265" vertical-scroll-proportion="0.0">
+            <state line="79" column="108" selection-start="2848" selection-end="2848" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -142,7 +140,6 @@
       <list>
         <option value="$PROJECT_DIR$/GpsWalkServices/src/Servicii/GoogleWeatherQueryWeb.java" />
         <option value="$PROJECT_DIR$/GpsWalkServices/src/Abstract/AbstractXmlQuery.java" />
-        <option value="$PROJECT_DIR$/src/com/listeners/LocationController.java" />
         <option value="$PROJECT_DIR$/src/com/utils/Converters.java" />
         <option value="$PROJECT_DIR$/src/com/hack/ActivityHostFragment.java" />
         <option value="$PROJECT_DIR$/src/com/utils/DrawLocationOverlay.java" />
@@ -153,9 +150,10 @@
         <option value="$PROJECT_DIR$/src/com/activities/WeatherActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/sensoractivity.xml" />
         <option value="$PROJECT_DIR$/res/menu/mainmenu.xml" />
-        <option value="$PROJECT_DIR$/src/com/activities/GMapActivity.java" />
         <option value="$PROJECT_DIR$/res/menu/menusensor.xml" />
         <option value="$PROJECT_DIR$/src/com/activities/SensorActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/listeners/LocationController.java" />
+        <option value="$PROJECT_DIR$/src/com/activities/GMapActivity.java" />
       </list>
     </option>
   </component>
@@ -256,10 +254,6 @@
               <option name="myItemId" value="com" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -276,6 +270,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="listeners" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -743,7 +741,11 @@
       <created>1338999962976</created>
       <updated>1338999962976</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Integrat weatheru si datele de la senzori in Gmapactivity">
+      <created>1339019581961</created>
+      <updated>1339019581961</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers>
       <YouTrack shared="false" url="localhost">
         <commitMessageFormat>{id} {summary}</commitMessageFormat>
@@ -848,7 +850,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor la mapView, pregatire sa fac hacku sa mearga in fragment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Integrat weatheru si datele de la senzori in Gmapactivity" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -882,6 +884,7 @@
     <MESSAGE value="Refactoring la servicii cu exceptii prinse" />
     <MESSAGE value="Distanta se reseteaza" />
     <MESSAGE value="Refactor la mapView, pregatire sa fac hacku sa mearga in fragment" />
+    <MESSAGE value="Integrat weatheru si datele de la senzori in Gmapactivity" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -937,20 +940,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/res/layout/mapactivity.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="57" selection-start="905" selection-end="905" vertical-scroll-proportion="0.6791444">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/activities/RoutesActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="13" selection-start="245" selection-end="245" vertical-scroll-proportion="0.34438306">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/utils/FileUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="14" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0">
@@ -961,13 +950,6 @@
     <entry file="file://$PROJECT_DIR$/src/com/utils/Converters.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="13" selection-start="320" selection-end="320" vertical-scroll-proportion="0.21122995">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/activities/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="50" selection-start="1684" selection-end="1684" vertical-scroll-proportion="0.27005348">
           <folding />
         </state>
       </provider>
@@ -985,13 +967,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/activities/WeatherActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="108" selection-start="2848" selection-end="2848" vertical-scroll-proportion="0.82548475">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1023,36 +998,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/activities/RoutesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="13" selection-start="245" selection-end="245" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/activities/PlotActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="13" selection-start="245" selection-end="245" vertical-scroll-proportion="0.34438306">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/activities/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="50" selection-start="1684" selection-end="1684" vertical-scroll-proportion="0.18600368">
+          <folding>
+            <element signature="e#1413#1682#0" expanded="true" />
+            <element signature="e#1675#1676#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/activities/SensorActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="29" selection-start="1432" selection-end="1432" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="class#ControllerActions#0;class#SensorActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/listeners/LocationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="135" column="16" selection-start="4904" selection-end="4904" vertical-scroll-proportion="0.4875346">
+        <state line="113" column="33" selection-start="3857" selection-end="3857" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/menu/menusensor.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="31" selection-start="265" selection-end="265" vertical-scroll-proportion="0.0">
+        <state line="8" column="31" selection-start="265" selection-end="265" vertical-scroll-proportion="0.25046042">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/activities/WeatherActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="108" selection-start="2848" selection-end="2848" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/activities/GMapActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="0" selection-start="1768" selection-end="1768" vertical-scroll-proportion="0.0">
+        <state line="49" column="67" selection-start="1466" selection-end="1466" vertical-scroll-proportion="1.0471015">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/activities/SensorActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="53" selection-start="5414" selection-end="5414" vertical-scroll-proportion="6.6435986">
-          <folding>
-            <element signature="e#4699#5428#0" expanded="true" />
-            <element signature="e#5538#6487#0" expanded="true" />
-            <element signature="e#6476#6477#0" expanded="true" />
-            <element signature="class#ControllerActions#0;class#SensorActivity#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
