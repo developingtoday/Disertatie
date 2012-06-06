@@ -31,7 +31,11 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
     private ControllerActions controllerActions;
     private Handler handler;
 
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                          Bundle savedInstanceState) {
@@ -44,21 +48,21 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         View fragView = inflater.inflate(R.layout.sensoractivity, container, false);
         txtLatitude=(TextView)fragView.findViewById(R.id.txtLatitude);
         txtLongitude =(TextView)fragView.findViewById(R.id.txtLongitude);
-        txtOrientation=(TextView)fragView.findViewById(R.id.txtOrientation);
+//        txtOrientation=(TextView)fragView.findViewById(R.id.txtOrientation);
         txtSpeed=(TextView)fragView.findViewById(R.id.txtSpeed);
         txtDistance=(TextView)fragView.findViewById(R.id.txtDistance);
         txtAltitude=(TextView)fragView.findViewById(R.id.txtAltitude);
         txtGeocode=(TextView)fragView.findViewById(R.id.txtGeocode);
         txtElevation=(TextView)fragView.findViewById(R.id.txtElevation) ;
         txtPressure=(TextView)fragView.findViewById(R.id.txtPressure);
-        btnElevate=(Button)fragView.findViewById(R.id.btnElevate);
-        btnGeocode=(Button)fragView.findViewById(R.id.btnGeocode);
-        btnStop=(Button)fragView.findViewById(R.id.btnStop);
-        btnStart=(Button)fragView.findViewById(R.id.btnStart);
-        btnElevate.setOnClickListener(controllerActions);
-        btnGeocode.setOnClickListener(controllerActions);
-        btnStart.setOnClickListener(controllerActions);
-        btnStop.setOnClickListener(controllerActions);
+//        btnElevate=(Button)fragView.findViewById(R.id.btnElevate);
+//        btnGeocode=(Button)fragView.findViewById(R.id.btnGeocode);
+//        btnStop=(Button)fragView.findViewById(R.id.btnStop);
+//        btnStart=(Button)fragView.findViewById(R.id.btnStart);
+//        btnElevate.setOnClickListener(controllerActions);
+//        btnGeocode.setOnClickListener(controllerActions);
+//        btnStart.setOnClickListener(controllerActions);
+//        btnStop.setOnClickListener(controllerActions);
         return fragView;
        }
 
@@ -82,7 +86,7 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         txtLongitude.setText("0");
         txtSpeed.setText("0");
         txtElevation.setText("0");
-        txtOrientation.setText("0");
+//        txtOrientation.setText("0");
         txtPressure.setText("0");
     }
     @Override
@@ -92,7 +96,7 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         txtAltitude.setText(Double.toString(l.getAltitudine()));
         txtSpeed.setText(Double.toString(l.getViteza()));
         txtPressure.setText(Double.toString(l.getPresiune()));
-        txtOrientation.setText(Float.toString(l.getOrientare()));
+//        txtOrientation.setText(Float.toString(l.getOrientare()));
         txtDistance.setText(Float.toString(l.getDistantaParcursa()));
     }
 
@@ -104,6 +108,86 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         return point;
     }
 
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menusensor,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.mnuGeocode:
+                geocode();
+                return true;
+            case R.id.mnuElevation:
+                elevate();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+    private void elevate()
+    {
+
+
+            Runnable runnable=new Runnable() {
+                @Override
+                public void run() {
+                    try{
+
+                        final GpsPoint p= ServicesFactory.getElevationService().getInfoFromPoint(getGpsPoint());
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                txtElevation.setText(Double.toString(p.getAltitude()));
+                            }
+                        });
+                    }catch (Exception ex)
+                    {
+                        Log.e("Exceptie",ex.getMessage(),ex);
+                        ex.printStackTrace();
+                    }
+                }
+            };
+            new Thread(runnable).start();
+    }
+
+    private void geocode()
+    {
+        Runnable runnable=new Runnable() {
+            @Override
+            public void run() {
+                try{
+
+                    final GeoInfo p= ServicesFactory.getReverseGeocodeService().getInfoFromPoint(getGpsPoint());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            txtGeocode.setText(p.getCity());
+                        }
+                    });
+                }catch (final Exception ex)
+                {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity().getApplicationContext(),ex.toString(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Log.e("Exceptie",ex.getMessage(),ex);
+                    ex.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
 
     class ControllerActions implements View.OnClickListener {
         @Override

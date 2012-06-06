@@ -5,12 +5,10 @@
       android:versionName="1.0">
     <application android:label="@string/app_name" >
         <uses-library android:name="com.google.android.maps" />
-        <activity android:name="MainActivity"
+        <activity android:name="GMapActivity"
                   android:label="@string/app_name"
-                  android:theme="@android:style/Theme.Holo.Light"
+                  android:theme="@android:style/Theme.Holo"
                 >
-
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,7 +19,7 @@
 
         <activity android:name=".PlotActivity"/>
         <activity android:name=".Settings"/>
-        <activity android:name=".GMapActivity">
+        <activity android:name=".MainActivity">
 
         </activity>
     </application>

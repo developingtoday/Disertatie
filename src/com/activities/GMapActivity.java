@@ -1,10 +1,14 @@
 package com.activities;
 
+import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.*;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.view.*;
 import android.widget.Button;
 import android.widget.Toast;
 import com.abstracte.INotifier;
@@ -12,6 +16,8 @@ import com.google.android.maps.*;
 import com.listeners.LocationController;
 import com.obj.SensorData;
 import com.utils.Converters;
+import com.utils.DrawLocationOverlay;
+import com.utils.Factory;
 
 import java.util.List;
 import java.util.Stack;
@@ -28,17 +34,76 @@ public class GMapActivity extends MapActivity implements INotifier<SensorData> {
     private MapView _mapView;
     private LocationController gpsLoc;
     private GeoPoint point;
+    private ViewGroup _viewFrag;
      List<Overlay> mapOverlays;
      MyLocationOverlay myLoc;
-    Button btnStartUp;
-  WeatherActivity w;
+     ActionBar actionBar;
 
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mapactivity);
+        setupMapController();
+        _viewFrag=(ViewGroup)findViewById(R.id.fragPlaceHolder);
+        actionBar=getActionBar();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+         inflater.inflate(R.menu.mainmenu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        FragmentManager managerFrag=getFragmentManager();
+        FragmentTransaction transFrag;
+
+        switch (item.getItemId())
+        {
+            case R.id.mnuDate:
+
+                 ShowFragment(Factory.getInstanceSensorActivity(),"Sensor");
+
+                return true;
+            case R.id.mnuWeather:
+                ShowFragment(Factory.getInstanceWeatherActivity(),"Weather");
+
+                return true;
+            case R.id.mnuStart:
+                Toast.makeText(getApplicationContext(),"Listening started",Toast.LENGTH_SHORT).show();
+                gpsLoc.setListening(true);
+                return true;
+            case R.id.mnuStop:
+                Toast.makeText(getApplicationContext(),"Listening stopped",Toast.LENGTH_SHORT).show();
+                gpsLoc.setListening(false);
+                return false;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+
+    }
+    String lastFrag;
+    void ShowFragment(Fragment curr,String tag)
+    {
+        FragmentManager managerFrag=getFragmentManager();
+        FragmentTransaction transFrag=managerFrag.beginTransaction();
+        Fragment last=managerFrag.findFragmentByTag(lastFrag);
+
+        if(last!=null ) transFrag.hide(last);
+        if(curr!=null && curr.isAdded()) transFrag.show(curr);
+        if(!curr.isAdded()) transFrag.add(R.id.fragPlaceHolder,curr,tag);
+        lastFrag=tag;
+        transFrag.commit();
+    }
+
+
+    private void setupMapController()
+    {
         _mapView=(MapView)findViewById(R.id.map_view);
         _mapController=_mapView.getController();
         mapOverlays=_mapView.getOverlays();
@@ -46,41 +111,27 @@ public class GMapActivity extends MapActivity implements INotifier<SensorData> {
         setupMyLocation();
         _mapView.invalidate();
         gpsLoc.setNotifier(this);
-
-
     }
-
 
      GeoPoint gpAux;
     public void notifyView(SensorData location) {
-        
         try{
-
             gpAux= Converters.fromLocation2GeoPoint(location);
             _mapController.animateTo(gpAux);
           _listaLocatii.add(gpAux);
             if(_listaLocatii.size()<=1) return;
             mapOverlays.add(new DrawLocationOverlay(_listaLocatii.elementAt(_listaLocatii.size()-2),_listaLocatii.elementAt(_listaLocatii.size()-1)));
-           //DrawMapList();
             _mapView.postInvalidate();
         }catch (Exception ex)
         {
             Log.d("Exception",ex.getMessage(),ex.getCause());
         }
-
     }
     @Override
     public void onResume()
     {
        super.onResume();
       myLoc.enableMyLocation();
-//      myLoc.runOnFirstFix(new Runnable() {
-//          @Override
-//          public void run() {
-//            DrawMapList();
-//          }
-//      });
-
     }
 
     public void onPause()
@@ -107,71 +158,16 @@ public class GMapActivity extends MapActivity implements INotifier<SensorData> {
     {
         myLoc=new MyLocationOverlay(this,_mapView);
         myLoc.enableCompass();
-        //myLoc.enableMyLocation();
+
         mapOverlays.add(myLoc);
-//        myLoc.runOnFirstFix(new Runnable() {
-//            @Override
-//            public void run() {
-//                DrawMapList();
-//            }
-//        });
-
-    }
-    private void DrawMapList()
-    {
-        try
-        {
-            if(myLoc.getMyLocation()==null) return;
-            _mapController.animateTo(myLoc.getMyLocation());
-            _mapController.setZoom(10);
-            _listaLocatii.add(myLoc.getMyLocation());
-            _mapView.postInvalidate();
-        }catch(Exception ex)
-        {
-            Log.d("Exception",ex.getMessage(),ex.getCause());
-            ex.printStackTrace();
-        }
-    }
-
-
-
-
-    class DrawLocationOverlay extends Overlay{
-        private GeoPoint gp1;
-        private GeoPoint gp2;
-        
-        public DrawLocationOverlay(GeoPoint start, GeoPoint end)
-        {
-            gp1=start;
-            gp2=end;
-        }
-        public boolean draw(Canvas canvas, MapView mapView, boolean shadow,
-                            long when) {
-            // TODO Auto-generated method stub
-            Projection projection = mapView.getProjection();
-            if (!shadow) {
-
-                Paint paint = new Paint();
-                paint.setAntiAlias(true);
-                Point point = new Point();
-                projection.toPixels(gp1, point);
-                paint.setColor(Color.BLUE);
-                Point point2 = new Point();
-                projection.toPixels(gp2, point2);
-                paint.setStrokeWidth(2);
-                canvas.drawLine((float) point.x, (float) point.y, (float) point2.x,(float) point2.y, paint);
-            }
-            return super.draw(canvas, mapView, shadow, when);
-        }
-        @Override
-        public void draw(Canvas canvas, MapView mapView, boolean shadow) {
-            // TODO Auto-generated method stub
-
-            super.draw(canvas, mapView, shadow);
-        }
 
 
     }
+
+
+
+
+
 
 
 

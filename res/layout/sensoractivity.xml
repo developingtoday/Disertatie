@@ -40,17 +40,6 @@
                 android:padding="3dip" />
     </TableRow>
 
-    <TableRow>
-        <TextView
-                android:layout_column="1"
-                android:text="Compass"
-                android:padding="3dip" />
-        <TextView
-                android:id="@+id/txtOrientation"
-                android:text="0"
-                android:gravity="right"
-                android:padding="3dip" />
-    </TableRow>
 
 
 
@@ -128,13 +117,7 @@
     <View
             android:layout_height="2dip"
             android:background="#FF909090" />
-    <TableRow>
-        <Button android:id="@+id/btnStop" android:text="Stop"></Button>
-        <Button android:id="@+id/btnGeocode" android:text="Geocode"></Button>
-        <Button android:id="@+id/btnElevate" android:text="Elevate"></Button>
 
-    </TableRow>
-    <Button android:id="@+id/btnExport" android:text="Export"></Button>
-    <Button android:id="@+id/btnStart" android:text="Start"></Button>
+
 
 </TableLayout>

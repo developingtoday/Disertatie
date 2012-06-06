@@ -61,6 +61,18 @@ public class WeatherActivity extends Fragment {
         return fragView;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("City",txtCity.getText().toString());
+        outState.putString("Temp",txtTemp.getText().toString());
+        outState.putString("Wind",txtWind.getText().toString());
+        outState.putString("Umidity",txtHumidity.getText().toString());
+        outState.putString("Condition",txtCondtion.getText().toString());
+    }
+
+
+
     private void ShowInfo() {
         //TODO verificat cazul cand nu exista conexiune la internet
         try{

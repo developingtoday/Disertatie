@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gmapactivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        >
     <com.google.android.maps.MapView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/map_view"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="600px"
             android:clickable="true"
             android:enabled="true"
             android:apiKey="0fzReuwETvt1fA3j6QjGnBo3g8dxny2ISHrK65g"
-            />
 
-</FrameLayout>
+            />
+    <LinearLayout android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                  android:layout_alignParentBottom="true"
+                  android:id="@+id/fragPlaceHolder"></LinearLayout>
+
+
+</RelativeLayout>
