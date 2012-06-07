@@ -94,10 +94,10 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         txtLatitude.setText(Double.toString(l.getLatitudine()));
         txtLongitude.setText(Double.toString(l.getLongitudine()));
         txtAltitude.setText(Double.toString(l.getAltitudine()));
-        txtSpeed.setText(Double.toString(l.getViteza()));
+        txtSpeed.setText(Double.toString(l.getSpeedInKmh()));
         txtPressure.setText(Double.toString(l.getPresiune()));
 //        txtOrientation.setText(Float.toString(l.getOrientare()));
-        txtDistance.setText(Float.toString(l.getDistantaParcursa()));
+        txtDistance.setText(Float.toString(l.getDistanceInKm()));
     }
 
     GpsPoint getGpsPoint()

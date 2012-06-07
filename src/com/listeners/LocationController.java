@@ -154,6 +154,7 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
     {
         isListening=false;
         distanta=0;
+        results[0]=0;
         manager.flushToDataSource();
 
     }

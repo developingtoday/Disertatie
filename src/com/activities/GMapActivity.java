@@ -79,7 +79,7 @@ public class GMapActivity extends MapActivity implements INotifier<SensorData> {
                 return true;
             case R.id.mnuStop:
                 Toast.makeText(getApplicationContext(),"Listening stopped",Toast.LENGTH_SHORT).show();
-                gpsLoc.setListening(false);
+                gpsLoc.closeListeners();
                 mapOverlays.clear();
                 mapOverlays.add(myLoc);
                 return false;

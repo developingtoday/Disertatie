@@ -98,8 +98,21 @@ public class SensorData {
                 '}';
     }
 
+
+    public float getDistanceInKm()
+    {
+        return distantaParcursa/1000;
+    }
+
+    public double getSpeedInKmh()
+    {
+        return viteza*3.6;
+    }
+
     public boolean isEmpty()
     {
         return longitudine==0 && latitudine==0;
     }
+
+
 }
