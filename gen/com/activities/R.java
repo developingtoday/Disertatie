@@ -47,6 +47,7 @@ public final class R {
         public static final int titlePlot=0x7f060004;
         public static final int titleRoutest=0x7f060005;
         public static final int txtAltitude=0x7f060008;
+        public static final int txtAltitudeBarometric=0x7f06000d;
         public static final int txtCity=0x7f060010;
         public static final int txtCondition=0x7f06000f;
         public static final int txtDistance=0x7f06000a;
@@ -55,7 +56,6 @@ public final class R {
         public static final int txtHumidity=0x7f060012;
         public static final int txtLatitude=0x7f060006;
         public static final int txtLongitude=0x7f060007;
-        public static final int txtPressure=0x7f06000d;
         public static final int txtSpeed=0x7f060009;
         public static final int txtTemp=0x7f060011;
         public static final int txtWind=0x7f060013;

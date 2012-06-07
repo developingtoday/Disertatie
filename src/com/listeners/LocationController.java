@@ -130,7 +130,7 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
             distanta+=results[0];
         }
         lastTimeLocationFix= SystemClock.elapsedRealtime();
-        manager.addData(new SensorData(location.getLongitude(),location.getLatitude(),sensorEventListener.getLastPressureValue(),location.getAltitude(),location.getSpeed(),oLic.getLastOrientation(),distanta));
+        manager.addData(new SensorData(location.getLongitude(),location.getLatitude(),sensorEventListener.getLastPressureValue(),location.getAltitude(),location.getSpeed(),oLic.getLastOrientation(),distanta,sensorEventListener.getLastAltitudeFromPressure(),location.getTime()));
         sendNotification(manager.getLastSensorDataKnown());
 
     }
@@ -158,6 +158,12 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
         manager.flushToDataSource();
 
     }
+
+    public Location getLastLocationWeather()
+    {
+        return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+    }
+
 
     public Location getLastLocation()
     {
@@ -203,6 +209,7 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
     class PressureListener implements SensorEventListener{
 
         private float presureValue;
+
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
                  try{
@@ -225,6 +232,13 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
         public float getLastPressureValue()
         {
             return presureValue;
+        }
+
+        public float getLastAltitudeFromPressure()
+        {
+            if(presureValue==0) return 0;
+            float alt=SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE,presureValue);
+            return alt;
         }
     }
 

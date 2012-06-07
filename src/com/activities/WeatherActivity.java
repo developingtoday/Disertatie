@@ -83,8 +83,8 @@ public class WeatherActivity extends Fragment {
 
 
         GpsPoint g=new GpsPoint();
-            g.setLatitude(lc.getLastLocation().getLatitude());
-            g.setLongitude(lc.getLastLocation().getLongitude());
+            g.setLatitude(lc.getLastLocationWeather().getLatitude());
+            g.setLongitude(lc.getLastLocationWeather().getLongitude());
         w=q.getInfoFromPoint(g);
 
         handler.post(new Runnable() {

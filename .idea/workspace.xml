@@ -8,7 +8,6 @@
         <option name="nightMode" value="notnight" />
         <option name="targetHashString" value="android-14" />
         <option name="theme" value="Theme.Holo" />
-        <option name="visible" value="false" />
       </GlobalState>
     </option>
   </component>
@@ -18,9 +17,12 @@
   <component name="ChangeListManager">
     <list default="true" id="dcb41177-ad91-4189-b57f-3569c3d82ff8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/activities/GMapActivity.java" afterPath="$PROJECT_DIR$/src/com/activities/GMapActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/com/activities/R.java" afterPath="$PROJECT_DIR$/gen/com/activities/R.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/sensoractivity.xml" afterPath="$PROJECT_DIR$/res/layout/sensoractivity.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/activities/SensorActivity.java" afterPath="$PROJECT_DIR$/src/com/activities/SensorActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/activities/WeatherActivity.java" afterPath="$PROJECT_DIR$/src/com/activities/WeatherActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/listeners/LocationController.java" afterPath="$PROJECT_DIR$/src/com/listeners/LocationController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/managers/SensorDataManager.java" afterPath="$PROJECT_DIR$/src/com/managers/SensorDataManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/obj/SensorData.java" afterPath="$PROJECT_DIR$/src/com/obj/SensorData.java" />
     </list>
     <ignored path="GpsWalk.iws" />
@@ -88,37 +90,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GMapActivity.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/activities/GMapActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="40" selection-start="2542" selection-end="2542" vertical-scroll-proportion="0.8636364">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SensorData.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/obj/SensorData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="64" selection-start="2469" selection-end="2469" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WeatherActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/activities/WeatherActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="108" selection-start="2848" selection-end="2848" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="SensorActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/activities/SensorActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="99" column="62" selection-start="3826" selection-end="3826" vertical-scroll-proportion="0.0">
+            <state line="28" column="97" selection-start="865" selection-end="865" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="class#ControllerActions#0;class#SensorActivity#0" expanded="false" />
               </folding>
@@ -129,7 +104,34 @@
       <file leaf-file-name="LocationController.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/listeners/LocationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="154" column="0" selection-start="5276" selection-end="5276" vertical-scroll-proportion="0.0">
+            <state line="161" column="42" selection-start="5479" selection-end="5501" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WeatherActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/activities/WeatherActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="86" column="52" selection-start="3041" selection-end="3041" vertical-scroll-proportion="0.7842105">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SensorData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/obj/SensorData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="57" column="140" selection-start="1420" selection-end="1420" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileUtils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/utils/FileUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="14" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -138,7 +140,7 @@
       <file leaf-file-name="SensorDataManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/managers/SensorDataManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="82" selection-start="872" selection-end="872" vertical-scroll-proportion="0.0">
+            <state line="51" column="79" selection-start="1414" selection-end="1414" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -157,7 +159,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/GpsWalkServices/src/Abstract/AbstractXmlQuery.java" />
         <option value="$PROJECT_DIR$/src/com/utils/Converters.java" />
         <option value="$PROJECT_DIR$/src/com/hack/ActivityHostFragment.java" />
         <option value="$PROJECT_DIR$/src/com/utils/DrawLocationOverlay.java" />
@@ -165,14 +166,15 @@
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/res/layout/mapactivity.xml" />
         <option value="$PROJECT_DIR$/src/com/utils/Factory.java" />
-        <option value="$PROJECT_DIR$/src/com/activities/WeatherActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/sensoractivity.xml" />
         <option value="$PROJECT_DIR$/res/menu/mainmenu.xml" />
         <option value="$PROJECT_DIR$/res/menu/menusensor.xml" />
-        <option value="$PROJECT_DIR$/src/com/obj/SensorData.java" />
-        <option value="$PROJECT_DIR$/src/com/activities/SensorActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/listeners/LocationController.java" />
         <option value="$PROJECT_DIR$/src/com/activities/GMapActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/sensoractivity.xml" />
+        <option value="$PROJECT_DIR$/src/com/activities/SensorActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/managers/SensorDataManager.java" />
+        <option value="$PROJECT_DIR$/src/com/obj/SensorData.java" />
+        <option value="$PROJECT_DIR$/src/com/listeners/LocationController.java" />
+        <option value="$PROJECT_DIR$/src/com/activities/WeatherActivity.java" />
       </list>
     </option>
   </component>
@@ -292,72 +294,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="obj" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="managers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="listeners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="activities" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -372,56 +308,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="menu" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="GpsWalkServices" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -441,28 +327,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GpsWalkServices" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Obj" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -866,7 +730,11 @@
       <created>1339021841756</created>
       <updated>1339021841756</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Adaugat metodele de conversie in SensorData,si rezolvat bugu la closeListeners in GmapActivity.">
+      <created>1339087858359</created>
+      <updated>1339087858359</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers>
       <YouTrack shared="false" url="localhost">
         <commitMessageFormat>{id} {summary}</commitMessageFormat>
@@ -908,6 +776,7 @@
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299923" sideWeight="0.70246476" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27097768" sideWeight="0.70246476" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32922536" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.67064846" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43485916" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -921,12 +790,11 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33205226" sideWeight="0.44190142" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819724" sideWeight="0.56514084" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3990755" sideWeight="0.56514084" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25635105" sideWeight="0.70246476" order="3" side_tool="false" content_ui="combo" x="518" y="71" width="330" height="586" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2975352" sideWeight="0.49384615" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25635105" sideWeight="0.7130282" order="3" side_tool="false" content_ui="combo" x="518" y="71" width="330" height="586" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28697184" sideWeight="0.49384615" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962063" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32922536" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32807016" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -971,7 +839,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finalizat pe ziua de azi" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adaugat metodele de conversie in SensorData,si rezolvat bugu la closeListeners in GmapActivity." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1007,6 +875,7 @@
     <MESSAGE value="Refactor la mapView, pregatire sa fac hacku sa mearga in fragment" />
     <MESSAGE value="Integrat weatheru si datele de la senzori in Gmapactivity" />
     <MESSAGE value="Finalizat pe ziua de azi" />
+    <MESSAGE value="Adaugat metodele de conversie in SensorData,si rezolvat bugu la closeListeners in GmapActivity." />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -1062,41 +931,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/res/menu/menusensor.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="31" selection-start="265" selection-end="265" vertical-scroll-proportion="0.25046042">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GpsWalkServices/src/Obj/GpsPoint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="178" selection-end="178" vertical-scroll-proportion="0.1764706">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GpsWalkServices/src/Obj/GeoInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="13" selection-start="155" selection-end="155" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/menu/mainmenu.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="50" selection-start="592" selection-end="592" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/activities/RoutesActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="13" selection-start="245" selection-end="245" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/activities/Settings.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="13" selection-start="246" selection-end="246" vertical-scroll-proportion="0.3575526">
@@ -1118,36 +952,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/activities/SensorActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="62" selection-start="3826" selection-end="3826" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="class#ControllerActions#0;class#SensorActivity#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/abstracte/ISensorDataManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="16" selection-start="394" selection-end="394" vertical-scroll-proportion="0.46961325">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/managers/SensorDataManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="82" selection-start="872" selection-end="872" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/activities/WeatherActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="108" selection-start="2848" selection-end="2848" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/Android/android-sdk/platforms/android-15/android.jar!/android/location/LocationManager.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -1157,23 +961,88 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/listeners/LocationController.java">
+    <entry file="file://$PROJECT_DIR$/GpsWalkServices/src/Abstract/AbstractXmlQuery.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="154" column="0" selection-start="5276" selection-end="5276" vertical-scroll-proportion="0.0">
+        <state line="28" column="22" selection-start="744" selection-end="744" vertical-scroll-proportion="0.25046042">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/obj/SensorData.java">
+    <entry file="file://$PROJECT_DIR$/GpsWalkServices/src/main/MainTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="64" selection-start="2469" selection-end="2469" vertical-scroll-proportion="0.0">
+        <state line="17" column="57" selection-start="633" selection-end="633" vertical-scroll-proportion="0.53222835">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/abstracte/INotifier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="17" selection-start="194" selection-end="194" vertical-scroll-proportion="0.28176796">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/abstracte/ISensorDataManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="35" selection-start="222" selection-end="240" vertical-scroll-proportion="0.34438306">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/activities/GMapActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="40" selection-start="2542" selection-end="2542" vertical-scroll-proportion="0.8636364">
+        <state line="117" column="2" selection-start="3618" selection-end="3618" vertical-scroll-proportion="-1.0957643">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/sensoractivity.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="106" column="28" selection-start="3204" selection-end="3204" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/utils/FileUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="14" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/managers/SensorDataManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="79" selection-start="1414" selection-end="1414" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/activities/SensorActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="97" selection-start="865" selection-end="865" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="class#ControllerActions#0;class#SensorActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/obj/SensorData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="140" selection-start="1420" selection-end="1420" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/listeners/LocationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="161" column="42" selection-start="5479" selection-end="5501" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/activities/WeatherActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="52" selection-start="3041" selection-end="3041" vertical-scroll-proportion="0.7842105">
           <folding />
         </state>
       </provider>

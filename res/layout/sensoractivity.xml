@@ -103,10 +103,10 @@
         <TextView android:text=""
                   android:padding="3dip" />
 
-        <TextView android:text="Pressure"
+        <TextView android:text="Barometric height"
                   android:padding="3dip" />
 
-        <TextView android:id="@+id/txtPressure"
+        <TextView android:id="@+id/txtAltitudeBarometric"
                   android:text="0"
                   android:layout_width="wrap_content"
                   android:gravity="right"

@@ -51,6 +51,7 @@ public class SensorDataManager implements ISensorDataManager {
             FileUtils.WriteTag("DistanceTravelled",Float.toString(loc.getDistantaParcursa()));
             FileUtils.WriteTag("Altitude",Double.toString(loc.getAltitudine()));
             FileUtils.WriteTag("Pressure",Double.toString(loc.getPresiune()));
+            FileUtils.WriteTag("BarometricHeight",Double.toString(loc.getAltitudineBarometrica()));
             FileUtils.WriteTag("Orientation",Float.toString(loc.getOrientare()));
             FileUtils.EndTag("SensorData");
         }

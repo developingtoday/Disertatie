@@ -10,7 +10,22 @@ import android.location.Location;
  * To change this template use File | Settings | File Templates.
  */
 public class SensorData {
-    double longitudine,latitudine,presiune,altitudine,viteza;
+    double longitudine;
+    double latitudine;
+    double presiune;
+    double altitudine;
+    double viteza;
+
+    public double getAltitudineBarometrica() {
+        return altitudineBarometrica;
+    }
+
+    public void setAltitudineBarometrica(double altitudineBarometrica) {
+        this.altitudineBarometrica = altitudineBarometrica;
+    }
+
+    double altitudineBarometrica;
+    long timeFix;
     float distantaParcursa;
 
     public float getDistantaParcursa() {
@@ -23,7 +38,9 @@ public class SensorData {
 
     float orientare;
 
-    public SensorData(double longitudine, double latitudine, double presiune, double altitudine, double viteza, float orientare,float distanta) {
+
+
+    public SensorData(double longitudine, double latitudine, double presiune, double altitudine, double viteza, float orientare,float distanta,double altitudineBarometrica,long timeFix) {
         this.longitudine = longitudine;
         this.latitudine = latitudine;
         this.presiune = presiune;
@@ -31,6 +48,7 @@ public class SensorData {
         this.viteza = viteza;
         this.orientare = orientare;
         this.distantaParcursa=distanta;
+        this.altitudineBarometrica=altitudineBarometrica;
     }
 
 
@@ -86,17 +104,8 @@ public class SensorData {
         return orientare;
     }
 
-    @Override
-    public String toString() {
-        return "SensorData{" +
-                "longitudine=" + longitudine +
-                ", latitudine=" + latitudine +
-                ", presiune=" + presiune +
-                ", altitudine=" + altitudine +
-                ", viteza=" + viteza +
-                ", orientare=" + orientare +
-                '}';
-    }
+
+
 
 
     public float getDistanceInKm()

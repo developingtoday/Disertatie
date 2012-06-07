@@ -23,7 +23,7 @@ import com.obj.SensorData;
  * To change this template use File | Settings | File Templates.
  */
 public class SensorActivity extends Fragment implements INotifier<SensorData> {
-    private TextView txtLatitude, txtLongitude,txtOrientation,txtSpeed,txtDistance,txtAltitude,txtElevation,txtPressure;
+    private TextView txtLatitude, txtLongitude,txtSpeed,txtDistance,txtAltitude,txtElevation,txtAlitudeBarometer;
     private TextView txtGeocode;
 
     private Button btnStop,btnGeocode,btnElevate,btnExport,btnStart;
@@ -48,21 +48,12 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         View fragView = inflater.inflate(R.layout.sensoractivity, container, false);
         txtLatitude=(TextView)fragView.findViewById(R.id.txtLatitude);
         txtLongitude =(TextView)fragView.findViewById(R.id.txtLongitude);
-//        txtOrientation=(TextView)fragView.findViewById(R.id.txtOrientation);
         txtSpeed=(TextView)fragView.findViewById(R.id.txtSpeed);
         txtDistance=(TextView)fragView.findViewById(R.id.txtDistance);
         txtAltitude=(TextView)fragView.findViewById(R.id.txtAltitude);
         txtGeocode=(TextView)fragView.findViewById(R.id.txtGeocode);
         txtElevation=(TextView)fragView.findViewById(R.id.txtElevation) ;
-        txtPressure=(TextView)fragView.findViewById(R.id.txtPressure);
-//        btnElevate=(Button)fragView.findViewById(R.id.btnElevate);
-//        btnGeocode=(Button)fragView.findViewById(R.id.btnGeocode);
-//        btnStop=(Button)fragView.findViewById(R.id.btnStop);
-//        btnStart=(Button)fragView.findViewById(R.id.btnStart);
-//        btnElevate.setOnClickListener(controllerActions);
-//        btnGeocode.setOnClickListener(controllerActions);
-//        btnStart.setOnClickListener(controllerActions);
-//        btnStop.setOnClickListener(controllerActions);
+        txtAlitudeBarometer=(TextView)fragView.findViewById(R.id.txtAltitudeBarometric);
         return fragView;
        }
 
@@ -86,8 +77,7 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         txtLongitude.setText("0");
         txtSpeed.setText("0");
         txtElevation.setText("0");
-//        txtOrientation.setText("0");
-        txtPressure.setText("0");
+        txtAlitudeBarometer.setText("0");
     }
     @Override
     public void notifyView(SensorData l) {
@@ -95,8 +85,7 @@ public class SensorActivity extends Fragment implements INotifier<SensorData> {
         txtLongitude.setText(Double.toString(l.getLongitudine()));
         txtAltitude.setText(Double.toString(l.getAltitudine()));
         txtSpeed.setText(Double.toString(l.getSpeedInKmh()));
-        txtPressure.setText(Double.toString(l.getPresiune()));
-//        txtOrientation.setText(Float.toString(l.getOrientare()));
+        txtAlitudeBarometer.setText(Double.toString(l.getAltitudineBarometrica()));
         txtDistance.setText(Float.toString(l.getDistanceInKm()));
     }
 
