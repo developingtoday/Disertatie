@@ -18,6 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.abstracte.INotifier;
 import com.abstracte.ISensorDataManager;
+import com.activities.GMapActivity;
 import com.activities.MainActivity;
 import com.activities.R;
 import com.google.android.maps.GeoPoint;
@@ -195,7 +196,7 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
                     //notificare status bar
                     NotificationManager nman=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
                     Notification.Builder nbuilder=new Notification.Builder(context);
-                    nbuilder.setContentIntent(PendingIntent.getActivity(context,0,new Intent(context, MainActivity.class),PendingIntent.FLAG_CANCEL_CURRENT));
+                    nbuilder.setContentIntent(PendingIntent.getActivity(context,0,new Intent(context, GMapActivity.class),PendingIntent.FLAG_CANCEL_CURRENT));
                     nbuilder.setSmallIcon(R.drawable.chance_of_rain);
                     nbuilder.setContentText("Gps fix acquired");
                     nbuilder.setContentTitle("GpsWalk");

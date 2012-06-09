@@ -153,7 +153,6 @@ public class GMapActivity extends MapActivity implements INotifier<SensorData> {
     }
 
     private Stack<GeoPoint> _listaLocatii=new Stack<GeoPoint>();
-    private GeoPoint _previous;
 
 
 
