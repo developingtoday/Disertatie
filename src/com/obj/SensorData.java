@@ -25,6 +25,15 @@ public class SensorData {
     }
 
     double altitudineBarometrica;
+
+    public long getTimeFix() {
+        return timeFix;
+    }
+
+    public void setTimeFix(long timeFix) {
+        this.timeFix = timeFix;
+    }
+
     long timeFix;
     float distantaParcursa;
 
@@ -49,6 +58,7 @@ public class SensorData {
         this.orientare = orientare;
         this.distantaParcursa=distanta;
         this.altitudineBarometrica=altitudineBarometrica;
+        this.timeFix=timeFix;
     }
 
 

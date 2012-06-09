@@ -45,6 +45,7 @@ public class SensorDataManager implements ISensorDataManager {
         for(SensorData loc:dataCol)
         {
             FileUtils.BeginTag("SensorData");
+            FileUtils.WriteTag("TimeFix",Double.toString(loc.getTimeFix()));
             FileUtils.WriteTag("Latitude", Double.toString(loc.getLatitudine()));
             FileUtils.WriteTag("Longitude",Double.toString(loc.getLongitudine()));
             FileUtils.WriteTag("Speed",Double.toString(loc.getViteza()));
