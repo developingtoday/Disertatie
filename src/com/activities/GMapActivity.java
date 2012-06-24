@@ -1,15 +1,14 @@
 package com.activities;
 
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.*;
 import android.graphics.*;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.abstracte.INotifier;
 import com.google.android.maps.*;
@@ -83,13 +82,26 @@ public class GMapActivity extends MapActivity implements INotifier<SensorData> {
                 mapOverlays.clear();
                 mapOverlays.add(myLoc);
                 return false;
+            case R.id.mnuCalibrate:
+               ShowCalibration();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
 
+     private void ShowCalibration()
+    {
+           FragmentTransaction ft=getFragmentManager().beginTransaction();
+           Fragment prev=getFragmentManager().findFragmentByTag("dialog");
+        if(prev!=null) ft.remove(prev);
+        ft.addToBackStack(null);
+        DialogFragment dialogFragment=new CalibrateDialogFragment();
+        dialogFragment.show(ft,"dialog");
 
 
     }
+
     String lastFrag;
     void ShowFragment(Fragment curr,String tag)
     {

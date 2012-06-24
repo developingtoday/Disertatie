@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/layoutCalibrate"
+        android:orientation="vertical"
+        >
+
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+                >
+            <TextView
+                    android:id="@+id/lblCalibrateAltitude"
+                    android:text="Altitude"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    >
+            </TextView>
+           <EditText android:id="@+id/txtCalibrateAltitude"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:inputType="numberDecimal"
+                    android:selectAllOnFocus="true"
+                   >
+
+                   </EditText>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            >
+        <TextView
+                android:id="@+id/lblCalibratePressure"
+                android:paddingTop="10px"
+                android:text="Barometer Pressure"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                >
+        </TextView>
+        <TextView android:id="@+id/txtCalibratePressure"
+                  android:paddingLeft="10px"
+
+                  android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                >
+
+        </TextView>
+    </LinearLayout>
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
+        <TextView android:paddingTop="10px" android:layout_height="wrap_content" android:layout_width="wrap_content"
+                  android:text="Ref Pressure">
+
+        </TextView>
+        <TextView android:paddingLeft="10px" android:paddingTop="10px"
+                  android:layout_height="wrap_content" android:layout_width="fill_parent"
+                  android:text="000" android:id="@+id/tvRefPressure" ></TextView>
+
+    </LinearLayout>
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            >
+        <Button android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/btnCalibrate"
+               android:text="Calibrate">
+               </Button>
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnCancel"
+                android:text="Cancel">
+                </Button>
+            </LinearLayout>
+</LinearLayout>

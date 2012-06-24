@@ -24,6 +24,7 @@ import com.activities.R;
 import com.google.android.maps.GeoPoint;
 import com.managers.SensorDataManager;
 import com.obj.SensorData;
+import com.utils.DataResource;
 import com.utils.FileUtils;
 
 import java.io.File;
@@ -207,15 +208,20 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
 
     }
 
-    class PressureListener implements SensorEventListener{
+    private INotifier<Float> _notifier;
+   public class PressureListener implements SensorEventListener{
 
         private float presureValue;
 
-        @Override
+
+
+
+       @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
                  try{
 
                   presureValue=sensorEvent.values[0];
+                  if(_notifier!=null) _notifier.notifyView(presureValue);
                  }catch(Exception ex)
                  {
 
@@ -238,12 +244,12 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
         public float getLastAltitudeFromPressure()
         {
             if(presureValue==0) return 0;
-            float alt=SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE,presureValue);
-            return alt;
+            float alt=SensorManager.getAltitude(DataResource.REF_PRESSURE,presureValue);
+            return alt+DataResource.REF_HEIGHT;
         }
     }
 
-    class CompassListener implements SensorEventListener{
+    public  class CompassListener implements SensorEventListener{
 
         float[] gravity,geomagnetic,orientation;
         float[]  I=new float[9];
@@ -274,7 +280,7 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
         }
     }
 
-    class OrientationCompassListener implements SensorEventListener{
+    public class OrientationCompassListener implements SensorEventListener{
         private float lastOrientation;
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
@@ -291,6 +297,10 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
         }
     }
 
+    public void setNotifierPressure(INotifier<Float> n)
+    {
+           _notifier=n;
+    }
 
 
 
