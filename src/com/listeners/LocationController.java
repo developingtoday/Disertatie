@@ -198,7 +198,7 @@ public class LocationController implements LocationListener,GpsStatus.Listener {
                     NotificationManager nman=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
                     Notification.Builder nbuilder=new Notification.Builder(context);
                     nbuilder.setContentIntent(PendingIntent.getActivity(context,0,new Intent(context, GMapActivity.class),PendingIntent.FLAG_CANCEL_CURRENT));
-                    nbuilder.setSmallIcon(R.drawable.chance_of_rain);
+                    nbuilder.setSmallIcon(R.drawable.gps);
                     nbuilder.setContentText("Gps fix acquired");
                     nbuilder.setContentTitle("GpsWalk");
                     nman.notify(0,nbuilder.getNotification());

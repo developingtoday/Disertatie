@@ -17,19 +17,21 @@ public final class R {
         public static final int cloudy=0x7f020003;
         public static final int flurries=0x7f020004;
         public static final int fog=0x7f020005;
-        public static final int icy=0x7f020006;
-        public static final int mist=0x7f020007;
-        public static final int mostly_cloudy=0x7f020008;
-        public static final int mostly_sunny=0x7f020009;
-        public static final int partly_cloudy=0x7f02000a;
-        public static final int pinclip=0x7f02000b;
-        public static final int rain=0x7f02000c;
-        public static final int showers=0x7f02000d;
-        public static final int sleet=0x7f02000e;
-        public static final int smoke=0x7f02000f;
-        public static final int snow=0x7f020010;
-        public static final int storm=0x7f020011;
-        public static final int sunny=0x7f020012;
+        public static final int gps=0x7f020006;
+        public static final int icy=0x7f020007;
+        public static final int mist=0x7f020008;
+        public static final int mostly_cloudy=0x7f020009;
+        public static final int mostly_sunny=0x7f02000a;
+        public static final int partly_cloudy=0x7f02000b;
+        public static final int pinclip=0x7f02000c;
+        public static final int rain=0x7f02000d;
+        public static final int resize=0x7f02000e;
+        public static final int showers=0x7f02000f;
+        public static final int sleet=0x7f020010;
+        public static final int smoke=0x7f020011;
+        public static final int snow=0x7f020012;
+        public static final int storm=0x7f020013;
+        public static final int sunny=0x7f020014;
     }
     public static final class id {
         public static final int btnCalibrate=0x7f060006;

@@ -76,7 +76,7 @@
     <View
             android:layout_height="2dip"
             android:background="#FF909090" />
-    <Button android:id="@+id/btnGetWeather" android:text="Actualizeaza"></Button>
+    <Button android:id="@+id/btnGetWeather" android:text="Update"></Button>
 </TableLayout>
 
 </LinearLayout>
